@@ -1,2 +1,2 @@
 # Team_SNS
-Make sns like instagram
+Make sns like instagram with Django
