@@ -1,5 +1,15 @@
-{% comment %} 안범기 {% endcomment %}
+{% comment %} {% extends 'nav.html' %}
+{% block style%}
+{% endblock%}
 
+{% block content%}
+<h1>1번쨰12345345431232341414</h1>
+
+{% endblock%} {% endcomment %}
+
+{% comment %} 안범기 {% endcomment %}
+{% comment %} 9/30 12:13수정 loginWindow 이미지수정 {% endcomment %}
+{% comment %} 상동 block 태그 제거 {% endcomment %}
 <!DOCTYPE html>
 {% load static %}    
 <html lang="ko">
@@ -12,10 +22,10 @@
     <script src="https://kit.fontawesome.com/c949f64c3b.js" crossorigin="anonymous"></script>
     </head>
 <body>
-    {% block base %}
     <i class="fa-thin fa-user"></i>
     <div class="contentsWrap">
         <div class="loginWindow">
+            {% comment %} <i style="font-size:100px;  " class="fa-brands fa-instagram"></i> {% endcomment %}
             <i style="font-size:100px;  " class="fa-brands fa-instagram"></i>
             <input type="text" placeholder="전화번호, 사용자 이름 또는 이메일" class="inlineToBlock">
             <input type="password" placeholder="비밀번호" class="inlineToBlock">
@@ -41,7 +51,5 @@
         </p>
     </div>
   </div>
-
-  {% endblock %}
 </body>
 </html>
