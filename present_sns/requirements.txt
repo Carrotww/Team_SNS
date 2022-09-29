@@ -1,0 +1,2 @@
+fontawesomefree==version_number
+
