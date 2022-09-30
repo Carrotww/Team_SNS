@@ -3,6 +3,7 @@
 <html lang="en">
     {% load static %} 
 <head>
+    
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +14,10 @@
    <!-- Title  -->
     <title>Instagram</title>
     {% block style %}
-    {% endblock %}
+
+
+    {% endblock%}
+    
 </head>
 
 <body>
@@ -22,16 +26,16 @@
          <!-- Created a container  -->
          <div class="wrapper">
          <!-- Made a logo container  -->
-            <div class="logo" style="padding-top: 8px;padding-right: 110px;">
+            <div class="logo">
                 <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="">
              </div>
              <!-- Logo container ends here -->
 
              <!-- Created search container  -->
             <div class="search">
-                <input
-                    style="border: 1px solid #dbdbdb; background-color: #fafafa; height: 27.5px;width: 12.5rem ;border-radius: 3.5px;padding-left: 25px;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;"
-                    type="text" placeholder="Search">
+                <input 
+                style="border: 2px solid #dbdbdb; background-color: #fafafa; height: 27.5px;width: 40rem ;border-radius: 3.5px;padding-left: 25px;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif ;"
+                    type="text" placeholder="Search" name="serch_bar">
             </div>
             <!-- search Container ends here  -->
 
@@ -184,11 +188,10 @@
            </div><!-- Container ends here  -->
 
     </nav><!-- Nav ends here -->
-    
-    {% block content %}
+
+    {% block navigator %}
 
     {% endblock %}
-
 </body>
 </html>
 

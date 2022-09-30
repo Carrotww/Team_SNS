@@ -7,7 +7,7 @@
     padding-top: 75px;
   }
   .nav {
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 54px;
     top: 0;
@@ -16,25 +16,31 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    
   }
   .wrapper {
     position: relative;
-    width: 975px;
-    height: 54px;
+    width: 100%;
+    height: 100px;
     top: 0;
     background-color: #ffffff;
   
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0px 0px 0px 18px;
+    padding: 0px 0px 0px 80px;
   }
   .icons {
-    width: 300px;
+    width: 350px;
     display: flex;
     justify-content: space-evenly;
   }
-  .logo,
+  .search {
+    margin-left: 300px;
+  }
+  .logo {
+    margin-left: 5px;
+  }
   .home,
   .explore,
   .create,
@@ -73,4 +79,12 @@
   
     color: #2b2b2b;
   }
+
+  .create_1{
+    padding: 0;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+  }
+  
   
