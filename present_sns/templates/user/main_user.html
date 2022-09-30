@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-{% include 'temp_test/nav.html' %}
+{% extends 'temp_test/nav.html' %}
 {% load static %}
 <html>
+{% block content %}
 
 <head>
   <script src="https://kit.fontawesome.com/c949f64c3b.js" crossorigin="anonymous"></script>
@@ -163,7 +164,7 @@
     <!-- End Page Container -->
   </div>
   <br>
-
+  {% endblock %}
   <!-- Footer -->
   <footer class="w3-container w3-theme-d3 w3-padding-16">
     <h5>Footer</h5>
