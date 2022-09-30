@@ -1,47 +1,105 @@
-{% comment %} 안범기 {% endcomment %}
+{% extends 'nav.html' %}
+{% block style%}
 
-<!DOCTYPE html>
-{% load static %}    
-<html lang="ko">
-<head></head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>8번방의 선물</title>
-    <link rel="stylesheet" href="{% static 'css/main.css' %}" /> 
-    {% comment %} <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script> {% endcomment %}
-    <script src="https://kit.fontawesome.com/c949f64c3b.js" crossorigin="anonymous"></script>
-    </head>
+{% endblock%}
+
+{% block content%}
+{% load static %} 
+<html lang="en">
+<head>
+
+
+    <title>instagram</title>
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/common.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}" />
+    <link rel="shortcut icon" href="./img/logo.png">
+
+
+</head>
 <body>
-    {% block base %}
-    <i class="fa-thin fa-user"></i>
-    <div class="contentsWrap">
-        <div class="loginWindow">
-            <i style="font-size:100px;  " class="fa-brands fa-instagram"></i>
-            <input type="text" placeholder="전화번호, 사용자 이름 또는 이메일" class="inlineToBlock">
-            <input type="password" placeholder="비밀번호" class="inlineToBlock">
-        <button class="inlineToBlock ordinaryLogin unactivatedLoginColor">로그인</button>
 
-        <div class="horizonAndOrWrap">
-            <hr class="leftHr">
-            <div class="or">또는</div>
-            <hr class="rightHr">
-        </div>
 
-        <a href="#" class="noneunderline">
-            <button class="inlineToBlock facebookLogin">
-                <i class="fa-brands fa-facebook" style="font-size:25px;"></i>
-                Facebook으로 로그인
-            </button>
-        </a>
-    
+<section id="container">
+
+    </header>
+
+
+    <div id="main_container">
+
+        <section class="b_inner">
+
+            <div class="hori_cont">
+                <div class="profile_wrap">
+                    <div class="profile_img">
+                        <img src="./img/logo.png" alt="profile">
+                    </div>
+                </div>
+
+                <div class="detail">
+                    <div class="top">
+                        <div class="user_name">KindTiger</div>
+                        <a href="profile_edit.html" class="profile_edit">프로필편집</a>
+                        <a href="#" class="logout">로그아웃</a>
+                    </div>
+
+                    <ul class="middle">
+                        <li>
+                            <span>게시물</span>
+                            3
+                        </li>
+                        <li>
+                            <span>팔로워</span>
+                            3
+                        </li>
+                        <li>
+                            <span>팔로우</span>
+                            3
+                        </li>
+                    </ul>
+                    
+
+                </div>
+            </div>
+
+            {% comment %} 여기서 부터는 자기가 쓴글 리스트 목록 // 리스트 형식 아닙니다.     {% endcomment %}
+            {% comment %} <div class="mylist_contents contents_container active">
+                <div class="pic">
+                    <a href="#"><img src="" alt=""></a>
+                </div>
+                <div class="pic">
+                    <a href="#"><img src="" alt=""></a>
+                </div>
+                <div class="pic">
+                    <a href="#"> <img src="" alt=""></a>
+                </div>
+                <div class="pic">
+                    <a href="#"> <img src="" alt=""></a>
+                </div>
+                <div class="pic">
+                    <a href="#"> <img src="" alt=""></a>
+                </div>
+                <div class="pic">
+                    <a href="#"> <img src="" alt=""></a>
+                </div>
+                <div class="pic">
+                    <a href="#"> <img src="" alt=""></a>
+                </div>
+                <div class="pic">
+                    <a href="#"> <img src="" alt=""></a>
+                </div>
+                <div class="pic">
+                    <a href="#"> <img src="" alt=""></a>
+                </div>
+            </div> {% endcomment %}
+        </section>
     </div>
-    <div class="haveAccount">
-        <p>계정이 없으신가요?
-          <a href="#" class="noneunderline">가입하기</a>
-        </p>
-    </div>
-  </div>
 
-  {% endblock %}
+
+</section>
+
 </body>
 </html>
+
+{% endblock%}
