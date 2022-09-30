@@ -18,3 +18,9 @@ def test4(request):
 
 def test5(request):
     return render(request, 'temp_test/testpage5.html')
+
+def login(request):
+    return render(request, 'user/login.html')
+
+def signup(request):
+    return render(request, 'user/signup.html')
