@@ -10,6 +10,7 @@ urlpatterns = [
     path('test5/', views.test5),
     path('login/',views.login), #login 페이지 접속
     path('signup/', views.signup), #signup 페이지 접속
-    path('main/',views.main),
+    # path('main/',views.main),
+    path('main_user/',views.main_user),
     path('logout/',views.logout,name='logout')
 ]
