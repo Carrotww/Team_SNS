@@ -27,6 +27,9 @@ def test5(request):
 def login(request):
     return render(request, 'user/login.html')
 
+def main_user(request):
+    return render(request, 'user/main_user.html')
+
 def signup(request):
     if request.method == 'GET':
         user = request.user.is_authenticated
@@ -54,6 +57,7 @@ def signup(request):
 def main(request): # 로그인 후 main page 보여주기 형식
     if request.method == 'GET':
         return render(request, 'temp_test/main.html')
+
 def sign_up_view(request):
     if request.method == 'GET':
         user = request.user.is_authenticated
