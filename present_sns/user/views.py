@@ -42,7 +42,7 @@ def login(request):
         if not user:
             return render(request,'user/login.html') 
         django_login(request, user) 
-        return redirect('/main_user')
+        return redirect('/main')
 
     elif request.method == 'GET':
         return render(request, 'user/login.html')
@@ -84,5 +84,11 @@ def logout(request):
 
 
 @csrf_exempt
-def main_user(request):
-    return render(request, 'user/main_user.html')
+def main_page(request):
+    return render(request, 'user/main_page.html') 
+
+def my_profile(request):
+    return render(request, 'user/my_profile.html')
+
+def read(request):
+    return render(request, 'tweet/read.html')

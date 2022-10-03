@@ -11,6 +11,8 @@ urlpatterns = [
     path('test5/', views.test5),
     path('login/',views.login), #login 페이지 접속
     path('signup/', views.signup), #signup 페이지 접속
-    path('main_user/',views.main_user),
-    path('logout/',views.logout,name='logout')
+    path('main/',views.main_page), #메인 페이지 접속
+    path('logout/',views.logout,name='logout'),
+    path('my_profile/', views.my_profile), #마이 프로필 접속
+    path('read/', views.read), # 게시글 상세페이지 접속
 ]
