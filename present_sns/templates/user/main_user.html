@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% include 'temp_test/nav.html' %}
+{% extends 'temp_test/nav.html' %}
 {% load static %}
 <html>
 
@@ -27,7 +27,7 @@
     <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
     <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
     <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding-large">My Profile</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large">{user. name} Profile</a>
   </div>
 
   <!-- Page Container -->
@@ -77,26 +77,22 @@
       <!-- Middle Column -->
       <div class="w3-col m7" style="margin-left: 30px;">
 
-        <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-          <!-- 테스트중 -->
-          <div class="feed">
-            <a href="#">
-              <img class="feed_img" src="https://i.postimg.cc/kGw4SRKS/gyuhyeon.jpg">
-            </a>
-          </div>
-          <div class="feed_content">
-            <p class="feed_txt">프론트 너무 어렵다 ㄹㅇ</p>
-          </div>
-
-          <form action="" method="post">
-            {% comment %}{% csrf_token %}{% endcomment %}
-            <div class="feed_icon">
-              <div class="like">
-                <span class="material-icons-outlined" onclick="like()">
-                  favorite_border
-                </span>
+        <div class="w3-row-padding">
+          <div class="w3-col m12">
+            <div class="w3-card w3-round w3-white" style="margin-bottom: 30px;">
+              <div class="w3-container w3-padding">
+                <h6 class="w3-opacity">게시물을 작성해주세요!</h6>
+                <p contenteditable="true" class="w3-border w3-padding">제목 </p>
+                <p contenteditable="true" class="w3-border w3-padding">변경가능합니다 </p>
+                <div align="right">
+                  <button type="button" class="comment" style="margin-top: 10px;"><i class="fa-regular fa-pen-to-square"></i>  Post</button>
+                </div>
+              
               </div>
             </div>
+          </div>
+        </div>
+        <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
           <!-- <img src="/w3images/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px"> -->
           <span class="w3-right w3-opacity">1 min</span>
           <h4>윤선님 테스트</h4><br>
@@ -169,7 +165,7 @@
     <!-- End Page Container -->
   </div>
   <br>
-
+  {% endblock %}
   <!-- Footer -->
   <footer class="w3-container w3-theme-d3 w3-padding-16">
     <h5>Footer</h5>

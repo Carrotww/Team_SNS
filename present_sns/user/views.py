@@ -32,7 +32,11 @@ def test5(request):
 
 @csrf_exempt
 def login(request):
-
+    if request.method == 'POST':
+        print('리퀘스트 로그 '+ str(request.body))
+        username =request.POST.get('username',None)
+        password =request.POST.get('userpw',None)
+        print ("name =" +username +"PW="+password)
 
         user = authenticate(request, username=username, password=password)
         if not user:
