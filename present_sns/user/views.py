@@ -1,13 +1,19 @@
+from telnetlib import STATUS
+from unittest import result
 from django.shortcuts import render,redirect
 from .models import UserModel
 from django.http import HttpResponse
 from django.contrib.auth import get_user_model  # 사용자가 데이터 베이스안에있는지 검사하는 함수
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+# csrf_exempt 는 보안관련
+from django.contrib.auth import authenticate
+from django.contrib.auth import login as django_login
 
 # Create your views here.
 def testpage(request):
-    return render(request, 'temp_test/nav.html') # 기본 test page
+    return render(request, 'user/login.html') # 기본 test page
 
 def test1(request):
     return render(request, 'temp_test/testpage1.html')
@@ -24,84 +30,55 @@ def test4(request):
 def test5(request):
     return render(request, 'temp_test/testpage5.html')
 
+@csrf_exempt
 def login(request):
-    return render(request, 'user/login.html')
 
-def main_user(request):
-    return render(request, 'user/main_user.html')
 
+        user = authenticate(request, username=username, password=password)
+        if not user:
+            return render(request,'user/login.html') 
+        django_login(request, user) 
+        return redirect('/main_user')
+
+    elif request.method == 'GET':
+        return render(request, 'user/login.html')
+
+
+
+@csrf_exempt
 def signup(request):
     if request.method == 'GET':
-        user = request.user.is_authenticated
-        if user:
-            return redirect('/')
-        else:
-            return render(request, 'user/signup.html')
-    elif request.method == 'POST':
-        # me = UserModel.objects.get(username=username)
-        username = request.POST.get('username', None)
-        password = request.POST.get('password', None)
-        password2 = request.POST.get('password2', None)
-        bio = request.POST.get('bio', None)
-        if password != password2:
-            return render(request, 'user/signup.html')
-        else:
-            exist_user = get_user_model().objects.filter(username=username)
-            if exist_user:
-                return render(request, 'user/signup.html')
-            else:
-                UserModel.objects.create_user(username=username, password=password, bio=bio)
-                return redirect('/sign-in')
-    return render(request, 'user/signup.html')
+        return render(request, 'user/signup.html')
+    elif request.method == "POST":
+        username = request.POST.get('username','')
+        userpw = request.POST.get('userpw','')
+        userpw2 = request.POST.get('userpw2','')
+        usernickname = request.POST.get('usernickname','')
+        userimg = request.POST.get('userimg','')
+        useremail = request.POST.get('useremail','')
+        phone = request.POST.get('phone','')
 
-def main(request): # 로그인 후 main page 보여주기 형식
-    if request.method == 'GET':
-        return render(request, 'temp_test/main.html')
-
-def sign_up_view(request):
-    if request.method == 'GET':
-        user = request.user.is_authenticated
-        if user:
-            return redirect('/')
+        if userpw !=userpw2:
+            return render(request, 'user/signup.html',{})
         else:
-            return render(request, 'user/signup.html')
-    elif request.method == 'POST':
-        # me = UserModel.objects.get(username=username)
-        username = request.POST.get('username', None)
-        password = request.POST.get('password', None)
-        password2 = request.POST.get('password2', None)
-        bio = request.POST.get('bio', None)
-        if password != password2:
-            return render(request, 'user/signup.html')
-        else:
-            exist_user = get_user_model().objects.filter(username=username)
-            if exist_user:
-                return render(request, 'user/signup.html')
-            else:
-                UserModel.objects.create_user(username=username, password=password, bio=bio)
-                return redirect('/sign-in')
-
-
-def sign_in_view(request):
-    if request.method == 'POST':
-        username = request.POST.get('username', None)
-        password = request.POST.get('password', None)
-
-        me = auth.authenticate(request, username=username, password=password)
-        if me is not None:
-            auth.login(request, me)
-            return HttpResponse('로그인 성공!' + username + '님 반갑 습니다')
-        else:
-            return redirect('/sign-in')
-    elif request.method == 'GET':
-        user = request.user.is_authenticated
-        if user:
-            return  redirect('/')
-        else:
-            return render(request, 'user/signin.html')
+            user_table = UserModel()
+            user_table.username=username
+            user_table.set_password(userpw2)
+            user_table.nickname=usernickname
+            user_table.user_img=userimg
+            user_table.email=useremail
+            user_table.phone=phone
+            user_table.save()
+        
+        return redirect('/login')
 
 
 @login_required()
 def logout(request):
     auth.logout(request)
     return  redirect('/')
+
+
+@csrf_exempt
+def main_user(request):
+    return render(request, 'user/main_user.html')

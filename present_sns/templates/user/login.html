@@ -22,14 +22,15 @@
     <script src="https://kit.fontawesome.com/c949f64c3b.js" crossorigin="anonymous"></script>
     </head>
 <body>
-    <div class="contentsWrap">
-        <div class="loginWindow">
-            {% comment %} <i style="font-size:100px;  " class="fa-brands fa-instagram"></i> {% endcomment %}
-            <i style="font-size:100px;  " class="fa-brands fa-instagram"></i>
-            <input type="text" placeholder="전화번호, 사용자 이름 또는 이메일" class="inlineToBlock">
-            <input type="password" placeholder="비밀번호" class="inlineToBlock">
-        <button class="inlineToBlock ordinaryLogin unactivatedLoginColor">로그인</button>
-
+    <form class ="form-login" method="POST" action="/login/">
+        {% csrf_token %}  
+        {% comment %} 서버에 보내줄 정보들을 form태그 에 담음     {% endcomment %}
+        <div class="contentsWrap">
+            <div class="loginWindow">
+                <i style="font-size:100px;  " class="fa-brands fa-instagram"></i>
+                <input type="text" placeholder="아이디" class="inlineToBlock" id="username" name="username">
+                <input type="password" placeholder="비밀번호" class="inlineToBlock" id="userpw" name="userpw">
+            <button class="inlineToBlock ordinaryLogin unactivatedLoginColor" type="submit">로그인</button>          
         <div class="horizonAndOrWrap">
             <hr class="leftHr">
             <div class="or">또는</div>
@@ -42,7 +43,7 @@
                 Facebook으로 로그인
             </button>
         </a>
-    
+    </form>  
     </div>
     <div class="haveAccount">
         <p>계정이 없으신가요?
