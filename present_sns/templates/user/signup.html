@@ -12,15 +12,21 @@
     </head>
 <body>
     {% block base %}
-    <div class="contentsWrap">
-        <div class="loginWindow">
-            <i style="font-size:100px;  " class="fa-brands fa-instagram"></i>
-            <input type="text" placeholder="전화번호, 사용자 이름 또는 이메일" class="inlineToBlock">
-            <input type="text" placeholder="이름" class="inlineToBlock">
-            <input type="text" placeholder="닉네임" class="inlineToBlock">
-            <input type="text" placeholder="비밀번호" class="inlineToBlock">
-        <button class="inlineToBlock ordinaryLogin unactivatedLoginColor">회원가입</button>
-
+    {% csrf_token%}
+    <form class ="form-signup" method="POST" action="/signup/">
+        <div class="contentsWrap">
+            <div class="loginWindow">
+                <i style="font-size:100px;  " class="fa-brands fa-instagram"></i>
+                <input type="text" placeholder="전화번호" class="inlineToBlock" id="phone" name="phone">
+                <input type="text" placeholder="아이디" class="inlineToBlock" id="username" name="username">
+                <input type="password" placeholder="비밀번호" class="inlineToBlock" id="userpw"name="userpw">
+                <input type="password" placeholder="비밀번호 재입력 해주세요!" class="inlineToBlock" id="userpw2"name="userpw2">
+                <input type="text" placeholder="닉네임" class="inlineToBlock" id="usernickname" name="usernickname">
+                <input type="text" placeholder="이메일" class="inlineToBlock" id="useremail" name="useremail">
+                <input type="text" placeholder="사진" class="inlineToBlock" id="userimg" name="userimg">
+                <input type="text" placeholder="자기 소개" class="inlineToBlock" id="bio" name="bio">
+            <button class="inlineToBlock ordinaryLogin unactivatedLoginColor">회원가입</button>
+    </form>
         <div class="horizonAndOrWrap">
             <hr class="leftHr">
             <div class="or">또는</div>
@@ -33,6 +39,11 @@
                 Facebook으로 로그인
             </button>
         </a>
+        <div class="haveAccount">
+            <p>
+              <a href="/login" class="noneunderline">로그인 하러가기</a>
+            </p>
+        </div>
     
     </div>
 

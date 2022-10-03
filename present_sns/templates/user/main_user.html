@@ -2,9 +2,9 @@
 {% extends 'temp_test/nav.html' %}
 {% load static %}
 <html>
-{% block content %}
 
 <head>
+  {% block style %}
   <script src="https://kit.fontawesome.com/c949f64c3b.js" crossorigin="anonymous"></script>
   <title>W3.CSS Template</title>
   <meta charset="UTF-8">
@@ -14,11 +14,12 @@
   <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="{% static 'css/user.css' %}">
+  {% endblock%}
   <style>
-
+    
   </style>
 </head>
-
+{% block navigator %}
 <body class="w3-theme-l5">
 
   <!-- Navbar on small screens -->
@@ -174,7 +175,7 @@
     <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
   </footer>
 
-  <script>
+  {% comment %} <script>
     // Accordion
     function myFunction(id) {
       var x = document.getElementById(id);
@@ -197,7 +198,7 @@
         x.className = x.className.replace(" w3-show", "");
       }
     }
-  </script>
+  </script> {% endcomment %}
 
 </body>
 
