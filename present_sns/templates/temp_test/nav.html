@@ -70,7 +70,9 @@
 ​
 
 <body>
+    
     <!-- Created Nav  -->
+    <form 
     <nav class="nav">
         <!-- Created a container  -->
         <div class="wrapper">
@@ -135,21 +137,30 @@
                 <!-- Heart ends  -->
                 ​
                 <!-- Profile image starts  -->
+                {% if user.is_authenticated %}
                 <div class="profile-img">
                     <!-- Profile icon start  -->
-                    <a href="#">
+                    <a href="{% url 'user:profileupdate' %}">
                         <div class="fa-solid fa-user"
-                            style="width:auto;height:32px; display: flex; align-items: center; padding-top: 5px; color: black;"
-                            alt=""></div>
+                        style="width:auto;height:32px; display: flex; align-items: center; padding-top: 5px; color: black;"
+                        alt="">
+                        {% else %}
+                        <a href="{% url 'user:login' %}" class="btn btn-dark">Login</a>
+                        {% endif %}
+                        </div>
+
                     </a>
                     <!-- Profile icons ends  -->
                 </div> <!-- Profile image ends  -->
 
             </div><!-- Icons container ends here  -->
             <!-- logout button start  -->
-            <div class="logout">
-                <button type="button" class="btn btn-dark">Logout</button>
-            </div>
+                {% if user.is_authenticated %}
+                <a href="{% url 'user:logout' %}" class="btn btn-dark">Logout</a>
+                {% comment %} {{ user.username }} //현재 접속중인 아이디 {% endcomment %}
+                {% else %}
+                <a href="{% url 'user:login' %}" class="btn btn-dark">Login</a>
+                {% endif %}
             <!-- logout button end  -->
             ​
         </div><!-- Container ends here  -->
