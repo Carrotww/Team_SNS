@@ -12,4 +12,9 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name='logout'), # 코드 추가하기
     path('login/',views.login, name='login'), #login 페이지 접속
     path('my_profile/', views.my_profile ,name='my_profile'),
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
 ]

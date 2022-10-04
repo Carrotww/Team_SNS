@@ -16,5 +16,8 @@ class UserModel(AbstractUser): # 적용하기 위해서 admin.py에서 적용 �
     nickname = models.CharField(max_length=8, default='', blank=False, unique=True)
     user_img = models.ImageField(upload_to='user', null=True, blank=True, default=None)
     phone = models.CharField(max_length=256,null=True,unique=True)
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes

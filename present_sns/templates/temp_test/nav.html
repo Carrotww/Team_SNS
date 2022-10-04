@@ -1,6 +1,9 @@
+<<<<<<< Updated upstream
 {% comment %} 네비 {% endcomment %}
 <!DOCTYPE html>
 
+<<<<<<< Updated upstream
+=======
 <html lang="en">
 {% load static %}
 
@@ -8,13 +11,24 @@
 <head>
 
 
+=======
+>>>>>>> Stashed changes
+<html lang="en">
+{% load static %}
+
+
+<head>
+<<<<<<< Updated upstream
+
+
+=======
+    ​
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Linking Css file  -->
-    <link rel="stylesheet" href="{% static 'css/nav.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	@@ -16,14 +17,58 @@
     <!-- Linking Js file  -->
     <script src="https://kit.fontawesome.com/c949f64c3b.js" crossorigin="anonymous"></script>
     <!-- Title  -->
@@ -24,6 +38,49 @@
     <!-- Jquery 아이콘 눌르면 팝업되게(링크거는방법) -->
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <title>Instagram</title>
+<<<<<<< Updated upstream
+    {% block style %} ​ ​ {% endblock%} ​
+
+</head>
+  <style>
+    .modal_overlay {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(1.5px);
+      -webkit-backdrop-filter: blur(1.5px);
+    }
+
+    .modal_window {
+      background: white;
+      backdrop-filter: blur(13.5px);
+      -webkit-backdrop-filter: blur(13.5px);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      width: 800px;
+      height: 600px;
+      position: relative;
+      padding: 10px;
+    }
+
+    .modal_image_upload {
+      outline: 2px dashed black;
+      outline-offset: -10px;
+      text-align: center;
+      transition: all 0.15s ease-in-out;
+      width: 780px;
+      height: 548px;
+    }
+  </style>
+
+=======
     {% block style %}
 
 
@@ -78,27 +135,52 @@
     }
 
 </style>
+<<<<<<< Updated upstream
 
+=======
+​
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 <body>
     
     <!-- Created Nav  -->
     <form 
     <nav class="nav">
+<<<<<<< Updated upstream
         <!-- Created a container  -->
         <div class="wrapper">
             <!-- Made a logo container  -->
             <div class="logo">
-                <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="">
+                <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt=""/>
             </div>
             <!-- Logo container ends here -->
             
+=======
+	@@ -34,86 +79,223 @@
+                <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="">
+            </div>
+            <!-- Logo container ends here -->
+<<<<<<< Updated upstream
+            
+=======
+            ​
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
             <!-- Created search container  -->
             <div class="search">
-                <input type="text" placeholder="Search" name="search_bar">
+                <input type="text" placeholder="Search" name="search_bar"/>
             </div>
             <!-- search Container ends here  -->
+<<<<<<< Updated upstream
             
+=======
+<<<<<<< Updated upstream
+            
+=======
+            ​
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
             <!-- Created icons container  -->
             <div class="icons">
                 <!-- Home starts  -->
@@ -114,7 +196,15 @@
 
                 </div>
                 <!-- Home ends  -->
+<<<<<<< Updated upstream
                 
+=======
+<<<<<<< Updated upstream
+                
+=======
+                ​
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
                 <!-- create starts  -->
                 <div id="nav_bar_add_box" class="create">
                     <a href="#">
@@ -133,7 +223,15 @@
                     </a>
                 </div>
                 <!-- create ends  -->
+<<<<<<< Updated upstream
                 
+=======
+<<<<<<< Updated upstream
+                
+=======
+                ​
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
                 <!-- Heart starts   -->
                 <div class="heart">
                     <a href="#">
@@ -146,7 +244,15 @@
                     </a>
                 </div>
                 <!-- Heart ends  -->
+<<<<<<< Updated upstream
                 
+=======
+<<<<<<< Updated upstream
+                
+=======
+                ​
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
                 <!-- Profile image starts  -->
                 {% if user.is_authenticated %}
                 <div class="profile-img">
@@ -157,6 +263,7 @@
                             <!-- 위 테그로 가면 login된 user nickname의 프로필로 연결됨 -->
 
                         <div class="fa-solid fa-user"
+<<<<<<< Updated upstream
                         style="width:auto;height:32px; display: flex; align-items: center; padding-top: 5px; color: black;"
                         alt="">
                         {% else %}
@@ -164,10 +271,18 @@
                         {% endif %}
                         </div>
 
+=======
+                            style="width:auto;height:32px; display: flex; align-items: center; padding-top: 5px; color: black;"
+                            alt=""></div>
+>>>>>>> Stashed changes
                     </a>
                     <!-- Profile icons ends  -->
                 </div> <!-- Profile image ends  -->
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
 
                 </div><!-- Icons container ends here  -->
                 <!-- logout button start  -->
@@ -180,8 +295,24 @@
                 {% endif %}
             <!-- logout button end  -->
             
+<<<<<<< Updated upstream
         </div><!-- Container ends here  -->
         
+=======
+        </div><!-- Container ends here  -->
+        
+=======
+            </div><!-- Icons container ends here  -->
+            <!-- logout button start  -->
+            <div class="logout">
+                <button type="button" class="btn btn-dark">Logout</button>
+            </div>
+            <!-- logout button end  -->
+            ​
+        </div><!-- Container ends here  -->
+        ​
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     </nav><!-- Nav ends here -->
     <!-- 드레그로 이미지 불러오는 부분 -->
     <!-- modal overlay 검은색 뒷 배경 -->
@@ -197,11 +328,21 @@
                 </div>
                 <div>
                     <!-- 닫기 버튼을 넣기위해 -->
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
 
                     <button class="button_s" type="button" id="close_button">
                         <i class="fa-regular fa-circle-xmark">Close</i>
                     </button>
 
+<<<<<<< Updated upstream
+=======
+=======
+                    <i class="fa-regular fa-circle-xmark">Close</i>
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
                 </div>
             </div>
             <div class="img_upload_space" style="background: burlywood; width: 760; height: 540px; margin-top: 20px;">
@@ -225,11 +366,21 @@
                 </div>
                 <div>
                     <!-- 닫기 버튼을 넣기위해 -->
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
 
                     <button class="button_s" type="button" id="2_close_button">
                         <i class="fa-regular fa-circle-xmark">Close</i>
                     </button>
 
+<<<<<<< Updated upstream
+=======
+=======
+                    <i class="fa-regular fa-circle-xmark">Close</i>
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
                 </div>
             </div>
             <div style="display: flex; flex-direction:row;">
@@ -239,6 +390,10 @@
                 <div style="border-left: solid 1px gray; margin-top: 20px;">
                     <div>
                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="9"
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
 
                             style="width: 274px; height: 400px;">내용을 적어주세요</textarea>
                     </div>
@@ -246,6 +401,12 @@
                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="9"
                             style="width: 274px; height: 100px;">tag</textarea>
 
+<<<<<<< Updated upstream
+=======
+=======
+                            style="width: 274px; height: 500px;"></textarea>
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
                     </div>
                     <div>
                         <i type="button" class="fa-solid fa-forward fa-1x" style="padding: 0 100px;">공유하기</i>
@@ -268,11 +429,23 @@
                 display: 'flex'
             });
             // // body의 스크롤 없애는법
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
 
             $(document.body).scc({
                 overflow: 'hidden'
             })
 
+<<<<<<< Updated upstream
+=======
+=======
+            // $(document.body).scc({
+            //     overflow: 'hidden'
+            // })
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
         });
         $('.img_upload_space')
             // dragover 마우스를 올리면 dragover 함수가 실행
@@ -299,6 +472,10 @@
             }
         }
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
         $('#close_button').click(function () {
             $('#first_modal').hide();
         })
@@ -308,6 +485,11 @@
 
 
 
+<<<<<<< Updated upstream
+=======
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
         function uploadFiles(e) {
             e.stopPropagation();
             e.preventDefault();
@@ -334,9 +516,19 @@
                     "outline": "none",
                     "background-size": "100% 100%",
                     // background-repeat : 배경 이미지 반복 지정
+<<<<<<< Updated upstream
 
                     "background-repeat": "no-repeat",
 
+=======
+<<<<<<< Updated upstream
+
+                    "background-repeat": "no-repeat",
+
+=======
+                    // "background-repeat": "no-repeat",
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
                     "background-position": "center"
 
                 });
@@ -347,6 +539,7 @@
 
             }
         }
+<<<<<<< Updated upstream
 
     </script>
     {% block navigator %}
@@ -357,3 +550,24 @@
 
 </html>
 
+=======
+<<<<<<< Updated upstream
+
+    </script>
+    {% block navigator %}
+
+    {% endblock %}
+</body>
+
+
+</html>
+=======
+</script>
+        {% block navigator %}
+
+        {% endblock %}
+</body >
+​
+</html >
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
