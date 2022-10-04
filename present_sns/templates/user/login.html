@@ -31,25 +31,18 @@
                 <i style="font-size:100px;  " class="fa-brands fa-instagram"></i>
                 <input type="text" placeholder="username" class="inlineToBlock" id="username" name="username">
                 <input type="password" placeholder="password" class="inlineToBlock" id="userpw" name="userpw">
-            <button class="inlineToBlock ordinaryLogin unactivatedLoginColor" type="submit">로그인</button>          
+            <button class="inlineToBlock ordinaryLogin unactivatedLoginColor" type="submit">로그인</button>
+        {% if error %}
+            <div class='alert alert-danger' role='alert'>
+                {{ error }}
+            </div>
+        {% endif %}          
         <div class="horizonAndOrWrap">
             <hr class="leftHr">
             <div class="or">또는</div>
             <hr class="rightHr">
         </div>
-        {% if error %}
-            <div class='alert alert-danger' role='alert'>
-                {{ error }}
-            </div>
-        {% endif %}
-
-        <a href="#" class="noneunderline">
-            <button class="inlineToBlock facebookLogin">
-                <i class="fa-brands fa-facebook" style="font-size:25px;"></i>
-                Facebook으로 로그인
-            </button>
-        </a>
-    </form>  
+    </form> 
     </div>
     <div class="haveAccount">
         <p>계정이 없으신가요?
