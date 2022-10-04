@@ -10,26 +10,9 @@ from django.views.decorators.csrf import csrf_exempt
 # csrf_exempt 는 보안관련
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
+from django.contrib.auth.views import LoginView, LogoutView, logout_then_login
 
 # Create your views here.
-def testpage(request):
-    return render(request, 'user/login.html') # 기본 test page
-
-def test1(request):
-    return render(request, 'temp_test/testpage1.html')
-
-def test2(request):
-    return render(request, 'temp_test/testpage2.html')
-
-def test3(request):
-    return render(request, 'temp_test/testpage3.html')
-
-def test4(request):
-    return render(request, 'temp_test/testpage4.html')
-
-def test5(request):
-    return render(request, 'temp_test/testpage5.html')
-
 @csrf_exempt
 def login(request):
     if request.method == 'POST':
@@ -40,7 +23,7 @@ def login(request):
 
         user = authenticate(request, username=username, password=password)
         if not user:
-            return render(request,'user/login.html') 
+            return render(request,'user/login.html', {'error':'이름 혹은 패스워드를 확인 해 주세요'}) 
         django_login(request, user) 
         return redirect('/main')
 
@@ -61,34 +44,39 @@ def signup(request):
         userimg = request.POST.get('userimg','')
         useremail = request.POST.get('useremail','')
         phone = request.POST.get('phone','')
+        bio = request.POST.get('bio','')
 
-        if userpw !=userpw2:
+        if userpw != userpw2:
             return render(request, 'user/signup.html',{})
         else:
-            user_table = UserModel()
-            user_table.username=username
-            user_table.set_password(userpw2)
-            user_table.nickname=usernickname
-            user_table.user_img=userimg
-            user_table.email=useremail
-            user_table.phone=phone
-            user_table.save()
+            exist_user = UserModel.objects.filter(username=username)
+            
+            if exist_user:
+                return render(request, 'user/signup.html')  #사용자가 이미 존재하는 경우 회원가입 다시
+            else:
+                user_table = UserModel()
+                user_table.username=username
+                user_table.set_password(userpw2)
+                user_table.nickname=usernickname
+                user_table.user_img=userimg
+                user_table.email=useremail
+                user_table.phone=phone
+                user_table.bio=bio
+                user_table.save()
         
-        return redirect('/login')
-
-
-@login_required()
-def logout(request):
-    auth.logout(request)
-    return  redirect('/')
-
+                return redirect('/login', {'error':'이름 혹은 패스워드를 확인 해 주세요'})
 
 @csrf_exempt
-def main_page(request):
-    return render(request, 'user/main_page.html') 
-
 def my_profile(request):
     return render(request, 'user/my_profile.html')
-
+@csrf_exempt
 def read(request):
     return render(request, 'tweet/read.html')
+
+@csrf_exempt
+def profileupdate(request):
+    return render(request, 'user/profileupdate.html')
+
+@csrf_exempt
+def my_profile(request):
+    return render(request, 'user/my_profile.html')

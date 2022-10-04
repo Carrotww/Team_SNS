@@ -5,6 +5,13 @@
     padding-top: 10px;
   }
 
+  .main_feed {
+    width: auto;
+    height: 2000px;
+    display: flex;
+    flex-direction: column;
+  }
+
   .profile_box {
     padding: 10px;
     display: flex;
@@ -32,10 +39,9 @@
 
   .feed_box {
     background-color: white;
-    width: 450px;
-    height: auto;
+    width: 500px;
     margin: 10px;
-    min-height: 750px;
+    min-height: auto;
     padding-bottom: 10px;
     border: 1px #CCD0D5 solid;
   }
@@ -43,7 +49,7 @@
   .feed_img {
     width: 100%;
     object-fit: contain;
-    min-height:500px;
+    max-height:500px;
   }
 
   .feed a:hover img,
@@ -53,24 +59,43 @@
 
   .feed_content {
     margin-top: 10px;
+    margin-left: 30px;
     padding: 0px 10px;
   }
-
-  .feed_txt {
-    font-size: 14px;
+  
+  .tags {
+    margin-left:30px;
+    font-weight: bold;
   }
+  
+  .feed_txt {
+    font-size: 18px;
+  }
+
+  .feed_icon {
+    padding: 5px 5px 0px 5px;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    margin-right:30px;
+    margin-bottom: 20px;
+  }
+
+  .feed_icon span {
+    padding: 7px 0px 5px 10px;
+  }
+
   .form {
     display: flex;
-    
   }
-  #emptyheart {
+  .bad {
     padding: 0;
     border: 0;
     outline: 0;
     color: red;
     background-color: transparent;
   }
-  #heart {
+  .good {
     padding: 0;
     border: 0;
     outline: 0;
@@ -81,20 +106,6 @@
     font-weight: bold;
   }
   .col {
-    width: auto;
-    height: auto;
-    display: flex;
-    margin: auto;
-    margin-top: 40px;
-  }
-  .container{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 40px;
-  }
-  .item {
-    display: flex;
-    width: auto;
-    height: auto;
+    place-items: center;
+    display: grid;
   }

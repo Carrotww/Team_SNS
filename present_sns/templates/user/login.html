@@ -18,7 +18,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>8번방의 선물</title>
-    <link rel="stylesheet" href="{% static 'css/main.css' %}" /> 
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" /> 
     {% comment %} <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script> {% endcomment %}
     <script src="https://kit.fontawesome.com/c949f64c3b.js" crossorigin="anonymous"></script>
     </head>
@@ -29,14 +29,19 @@
         <div class="contentsWrap">
             <div class="loginWindow">
                 <i style="font-size:100px;  " class="fa-brands fa-instagram"></i>
-                <input type="text" placeholder="Username" class="inlineToBlock" id="username" name="username">
-                <input type="password" placeholder="비밀번호" class="inlineToBlock" id="userpw" name="userpw">
+                <input type="text" placeholder="username" class="inlineToBlock" id="username" name="username">
+                <input type="password" placeholder="password" class="inlineToBlock" id="userpw" name="userpw">
             <button class="inlineToBlock ordinaryLogin unactivatedLoginColor" type="submit">로그인</button>          
         <div class="horizonAndOrWrap">
             <hr class="leftHr">
             <div class="or">또는</div>
             <hr class="rightHr">
         </div>
+        {% if error %}
+            <div class='alert alert-danger' role='alert'>
+                {{ error }}
+            </div>
+        {% endif %}
 
         <a href="#" class="noneunderline">
             <button class="inlineToBlock facebookLogin">
