@@ -47,8 +47,8 @@ def signup(request):
         username = request.POST.get('username','')
         userpw = request.POST.get('userpw','')
         userpw2 = request.POST.get('userpw2','')
-        usernickname = request.POST.get('usernickname','')
-        userimg = request.POST.get('userimg','')
+        user = request.POST.get('user','')
+        # userimg = request.POST.get('userimg','')
         useremail = request.POST.get('useremail','')
         phone = request.POST.get('phone','')
         bio = request.POST.get('bio','')
@@ -66,8 +66,8 @@ def signup(request):
                 user_table = UserModel()
                 user_table.username=username
                 user_table.set_password(userpw2)
-                user_table.nickname=usernickname
-                user_table.user_img=userimg
+                user_table.user=user
+                # user_table.user_img=userimg
                 user_table.email=useremail
                 user_table.phone=phone
                 user_table.bio=bio
@@ -89,10 +89,6 @@ def my_profile(request):
 def read(request):
     return render(request, 'tweet/read.html')
 
-
-@csrf_exempt
-def profileupdate(request):
-    return render(request, 'user/profileupdate.html')
 
 
 @csrf_exempt

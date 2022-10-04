@@ -17,14 +17,14 @@
         <div class="contentsWrap">
             <div class="loginWindow">
                 <i style="font-size:100px;  " class="fa-brands fa-instagram"></i>
-                <input type="text" placeholder="전화번호" class="inlineToBlock" id="phone" name="phone">
-                <input type="text" placeholder="아이디" class="inlineToBlock" id="username" name="username">
+                <input type="text" placeholder="전화번호를 입력해주세요" class="inlineToBlock" id="phone" name="phone">
+                <input type="text" placeholder="로그인 시 사용할 아이디를 입력해주세요" class="inlineToBlock" id="username" name="username">
                 <input type="password" placeholder="비밀번호" class="inlineToBlock" id="userpw"name="userpw">
                 <input type="password" placeholder="비밀번호 재입력 해주세요!" class="inlineToBlock" id="userpw2"name="userpw2">
-                <input type="text" placeholder="닉네임" class="inlineToBlock" id="usernickname" name="usernickname">
-                <input type="text" placeholder="이메일" class="inlineToBlock" id="useremail" name="useremail">
-                <input type="text" placeholder="사진" class="inlineToBlock" id="userimg" name="userimg">
-                <input type="text" placeholder="자기 소개" class="inlineToBlock" id="bio" name="bio">
+                <input type="text" placeholder="이름을 입력해주세요" class="inlineToBlock" id="user" name="user">
+                <input type="text" placeholder="이메일을 입력해주세요" class="inlineToBlock" id="useremail" name="useremail">
+                <!-- <input type="text" placeholder="사진" class="inlineToBlock" id="userimg" name="userimg"> -->
+                <input type="text" placeholder="자기 소개말을 입력해주세요" class="inlineToBlock" id="bio" name="bio">
             <button class="inlineToBlock ordinaryLogin unactivatedLoginColor">회원가입</button>
     </form>
         {% if error %}
@@ -32,11 +32,6 @@
                 {{ error }}
             </div>
         {% endif %}
-        <div class="horizonAndOrWrap">
-            <hr class="leftHr">
-            <div class="or">또는</div>
-            <hr class="rightHr">
-        </div>
         <div class="haveAccount">
             <p>
               <a href="/login" class="noneunderline">로그인 하러가기</a>

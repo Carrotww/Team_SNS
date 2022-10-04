@@ -49,272 +49,89 @@
   <title>8'Rooms SNS</title>
 </head>
 <body>
-  {% comment %}{% for fd in feed %}{% endcomment %}
+  {% comment %} 
+  write_no = models.AutoField(primary_key=True) # wirte number -> 기본키
+    nickname = models.ForeignKey(UserModel, on_delete=models.CASCADE) # 외래키
+    title = models.CharField(max_length=64, blank = False)
+    content = models.CharField(max_length=256,blank = False)
+    modify_dt = models.DateTimeField('MODIFY DATE', auto_now=True)
+    tags = TaggableManager(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    tweet_img = models.ImageField(upload_to='tweet', null=True, blank=True, default=None) #업로드 이미지
+    profile_img = models.TextField()
+  {% endcomment %}
   <div class="container">
-    <div class="col">
-      <div class="feed_box">
-        <div class="profile_box">
-          <div class="profile_img_box">
-            <img class="profile_img" src="https://t1.daumcdn.net/cafeattach/aVeZ/96bb985f315f63a2fe16120d8b0fec4b589ac4e9">
+    {% for tw in tweet %}
+      <div class="col">
+        <div class="feed_box">
+          <div class="profile_box">
+            <div class="profile_img_box">
+              <img class="profile_img" src="https://t1.daumcdn.net/cafeattach/aVeZ/96bb985f315f63a2fe16120d8b0fec4b589ac4e9">
+            </div>
+            <!-- 작성자 아이디 데이터에서 가져와야함-->
+            <span class="author"> suzy022 </span> {% comment %}{{ tw.nickname }}{% endcomment %}
+            <!-- 게시글 작성자 닉네임, 작성 시간 데이터에서 가져와야함 -->
+            <span style="font-size: small;">전</span>{% comment %}{{ tw.author.username }}-{{tw.created_at|timesince}}{%endcomment %}
+            <!-- 작성자가 유저인 경우만 삭제 버튼 출력 -->
+            {% if tweet.nickname == username %}
+            <a href="/main/user_profile_delete/{{ tweet.write_no }}"
+            style="width: auto; height: 30px; margin-left: auto; margin-right: 20px;">
+              <button type="button" class="btn btn-outline-secondary" onclick="delete_feed()"
+              style="width: auto; height: 30px;">삭제</button>
+            </a>
+            {% endif %}
           </div>
-          <!-- 작성자 아이디 데이터에서 가져와야함-->
-          <span class="author"> suzy022 </span> {% comment %}{{ tw.id }}{% endcomment %}
-          <!-- 게시글 작성자 닉네임, 작성 시간 데이터에서 가져와야함 -->
-          <span style="font-size: small;">전</span>{% comment %}{{ tw.author.username }}-{{tw.created_at|timesince}}{%
-          endcomment %}
-          <!-- 작성자가 유저인 경우만 삭제 버튼 출력 -->
-          {% comment %}{% if tw.author == user %}{% endcomment %}
-          <button type="button" class="btn btn-outline-secondary" onclick="delete_feed()"
-            style="width: auto; height: 30px; margin-left: auto; margin-right: ;">삭제</button>
+          <div class="feed">
+            <!-- 게시물 사진 클릭 시 게시물 상세페이지로 이동 -->
+            <a href="/read/">
+              <!-- 아래 사진을 가져오는 태그는 게시물 작성 페이지에서 작성 후 db에서 가져와야함 -->
+              <img class="feed_img" src="https://i.postimg.cc/kGw4SRKS/gyuhyeon.jpg">
+            </a>
+          </div>
+          <div class="feed_content">
+            <!-- 아래 게시글도 게시물 작성 페이지에서 작성 후 db에서 가져와야함 -->
+            <p style="font-size: 14px;">프론트 너무 어렵다 ㄹㅇ</p>{% comment %}{{ tw.content }}{% endcomment %}
+          </div>
+          <form action="" method="post" style="margin-top: 20px;">
+            {% csrf_token %}
+            <div class="comment_box">
+              <div class="like_icon">
+                <div class="like">
+                  <button style="display: block" onclick="change();" id="emptyheart">
+                    <i class="fa-regular fa-heart" aria-hidden="true"></i>
+                  </button>
+                  <button style="display: none" onclick="change();" id="heart">
+                    <i class="fa-solid fa-heart" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="comment">
+                <input type="text" class="form-control" placeholder="댓글" aria-label="First name" name="my-comment"
+                  id="my-comment" style="width: 400px;">
+              </div>
+              <button onclick="Comment()" type="submit" class="btn btn-dark" style="width: 70px;">게시</button>
+            </div>
+          </form>
+          <!-- 태그 조건문(게시물 작성 페이지에서 입력한 태그 db에서 가져와야함) -->
+          {% comment %}{% if tw.tags.all %}{% endcomment %}
+          <!-- 태그 반복문 -->
+          {% comment %}{% for tag in tw.tags.all %}{% endcomment %}
+          <div class="tags">
+            <div class="card-body">
+              <!-- 태그 선택 시 해당 태그가 있는 모든 게시물 보여주기(페이지나 모달 창 만들어야 할 것 같음) -->
+              {% comment %}<a href="{% url 'tagged_object_list' tag.name %}" style="color:black;">{% endcomment %}
+                <!-- 게시물 작성 페이지에서 입력한 태그 데이터를 가져와야함 -->
+                <a href="#" class="card-link" style="color:black;">#프론트{% comment %}{{ tag.name }}{% endcomment %}</a>
+                <a href="#" class="card-link">#백엔드{% comment %}{{ tag.name }}{% endcomment %}</a>
+            </div>
+          </div>
+          <!-- 태그 반복문, 조건문 종료 -->
+          {% comment %}{% endfor %}{% endcomment %}
           {% comment %}{% endif %}{% endcomment %}
         </div>
-        <div class="feed">
-          <!-- 게시물 사진 클릭 시 게시물 상세페이지로 이동 -->
-          <a href="/read/">
-            <!-- 아래 사진을 가져오는 태그는 게시물 작성 페이지에서 작성 후 db에서 가져와야함 -->
-            <img class="feed_img" src="https://i.postimg.cc/kGw4SRKS/gyuhyeon.jpg">
-          </a>
-        </div>
-        <div class="feed_content">
-          <!-- 아래 게시글도 게시물 작성 페이지에서 작성 후 db에서 가져와야함 -->
-          <p style="font-size: 14px;">프론트 너무 어렵다 ㄹㅇ</p>{% comment %}{{ tw.content }}{% endcomment %}
-        </div>
-        <form action="" method="post" style="margin-top: 20px;">
-          {% csrf_token %}
-          <div class="comment_box">
-            <div class="like_icon">
-              <div class="like">
-                <button style="display: block" onclick="change();" id="emptyheart">
-                  <i class="fa-regular fa-heart" aria-hidden="true"></i>
-                </button>
-                <button style="display: none" onclick="change();" id="heart">
-                  <i class="fa-solid fa-heart" aria-hidden="true"></i>
-                </button>
-              </div>
-            </div>
-            <div class="comment">
-              <input type="text" class="form-control" placeholder="댓글" aria-label="First name" name="my-comment"
-                id="my-comment" style="width: 400px;">
-            </div>
-            <button onclick="Comment()" type="submit" class="btn btn-dark" style="width: 70px;">게시</button>
-          </div>
-        </form>
-        <!-- 태그 조건문(게시물 작성 페이지에서 입력한 태그 db에서 가져와야함) -->
-        {% comment %}{% if tw.tags.all %}{% endcomment %}
-        <!-- 태그 반복문 -->
-        {% comment %}{% for tag in tw.tags.all %}{% endcomment %}
-        <div class="tags">
-          <div class="card-body">
-            <!-- 태그 선택 시 해당 태그가 있는 모든 게시물 보여주기(페이지나 모달 창 만들어야 할 것 같음) -->
-            {% comment %}<a href="{% url 'tagged_object_list' tag.name %}" style="color:black;">{% endcomment %}
-              <!-- 게시물 작성 페이지에서 입력한 태그 데이터를 가져와야함 -->
-              <a href="#" class="card-link" style="color:black;">#프론트{% comment %}{{ tag.name }}{% endcomment %}</a>
-              <a href="#" class="card-link">#백엔드{% comment %}{{ tag.name }}{% endcomment %}</a>
-          </div>
-        </div>
-        <!-- 태그 반복문, 조건문 종료 -->
-        {% comment %}{% endfor %}{% endcomment %}
-        {% comment %}{% endif %}{% endcomment %}
       </div>
-    </div>
-    <div class="col">
-      <div class="feed_box">
-        <div class="profile_box">
-          <div class="profile_img_box">
-            <img class="profile_img" src="https://t1.daumcdn.net/cafeattach/aVeZ/96bb985f315f63a2fe16120d8b0fec4b589ac4e9">
-          </div>
-          <!-- 작성자 아이디 데이터에서 가져와야함-->
-          <span class="author"> suzy022 </span> {% comment %}{{ tw.id }}{% endcomment %}
-          <!-- 게시글 작성자 닉네임, 작성 시간 데이터에서 가져와야함 -->
-          <span style="font-size: small;">전</span>{% comment %}{{ tw.author.username }}-{{tw.created_at|timesince}}{%
-          endcomment %}
-          <!-- 작성자가 유저인 경우만 삭제 버튼 출력 -->
-          {% comment %}{% if tw.author == user %}{% endcomment %}
-          <button type="button" class="btn btn-outline-secondary" onclick="delete_feed()"
-            style="width: auto; height: 30px; margin-left: auto; margin-right: ;">삭제</button>
-          {% comment %}{% endif %}{% endcomment %}
-        </div>
-        <div class="feed">
-          <!-- 게시물 사진 클릭 시 게시물 상세페이지로 이동 -->
-          <a href="/read/">
-            <!-- 아래 사진을 가져오는 태그는 게시물 작성 페이지에서 작성 후 db에서 가져와야함 -->
-            <img class="feed_img" src="https://i.postimg.cc/kGw4SRKS/gyuhyeon.jpg">
-          </a>
-        </div>
-        <div class="feed_content">
-          <!-- 아래 게시글도 게시물 작성 페이지에서 작성 후 db에서 가져와야함 -->
-          <p style="font-size: 14px;">프론트 너무 어렵다 ㄹㅇ</p>{% comment %}{{ tw.content }}{% endcomment %}
-        </div>
-        <form action="" method="post" style="margin-top: 20px;">
-          {% csrf_token %}
-          <div class="comment_box">
-            <div class="like_icon">
-              <div class="like">
-                <button style="display: block" onclick="change();" id="emptyheart">
-                  <i class="fa-regular fa-heart" aria-hidden="true"></i>
-                </button>
-                <button style="display: none" onclick="change();" id="heart">
-                  <i class="fa-solid fa-heart" aria-hidden="true"></i>
-                </button>
-              </div>
-            </div>
-            <div class="comment">
-              <input type="text" class="form-control" placeholder="댓글" aria-label="First name" name="my-comment"
-                id="my-comment" style="width: 400px;">
-            </div>
-            <button onclick="Comment()" type="submit" class="btn btn-dark" style="width: 70px;">게시</button>
-          </div>
-        </form>
-        <!-- 태그 조건문(게시물 작성 페이지에서 입력한 태그 db에서 가져와야함) -->
-        {% comment %}{% if tw.tags.all %}{% endcomment %}
-        <!-- 태그 반복문 -->
-        {% comment %}{% for tag in tw.tags.all %}{% endcomment %}
-        <div class="tags">
-          <div class="card-body">
-            <!-- 태그 선택 시 해당 태그가 있는 모든 게시물 보여주기(페이지나 모달 창 만들어야 할 것 같음) -->
-            {% comment %}<a href="{% url 'tagged_object_list' tag.name %}" style="color:black;">{% endcomment %}
-              <!-- 게시물 작성 페이지에서 입력한 태그 데이터를 가져와야함 -->
-              <a href="#" class="card-link" style="color:black;">#프론트{% comment %}{{ tag.name }}{% endcomment %}</a>
-              <a href="#" class="card-link">#백엔드{% comment %}{{ tag.name }}{% endcomment %}</a>
-          </div>
-        </div>
-        <!-- 태그 반복문, 조건문 종료 -->
-        {% comment %}{% endfor %}{% endcomment %}
-        {% comment %}{% endif %}{% endcomment %}
-      </div>
-    </div>
-    <div class="col">
-      <div class="feed_box">
-        <div class="profile_box">
-          <div class="profile_img_box">
-            <img class="profile_img" src="https://t1.daumcdn.net/cafeattach/aVeZ/96bb985f315f63a2fe16120d8b0fec4b589ac4e9">
-          </div>
-          <!-- 작성자 아이디 데이터에서 가져와야함-->
-          <span class="author"> suzy022 </span> {% comment %}{{ tw.id }}{% endcomment %}
-          <!-- 게시글 작성자 닉네임, 작성 시간 데이터에서 가져와야함 -->
-          <span style="font-size: small;">전</span>{% comment %}{{ tw.author.username }}-{{tw.created_at|timesince}}{%
-          endcomment %}
-          <!-- 작성자가 유저인 경우만 삭제 버튼 출력 -->
-          {% comment %}{% if tw.author == user %}{% endcomment %}
-          <button type="button" class="btn btn-outline-secondary" onclick="delete_feed()"
-            style="width: auto; height: 30px; margin-left: auto; margin-right: ;">삭제</button>
-          {% comment %}{% endif %}{% endcomment %}
-        </div>
-        <div class="feed">
-          <!-- 게시물 사진 클릭 시 게시물 상세페이지로 이동 -->
-          <a href="/read/">
-            <!-- 아래 사진을 가져오는 태그는 게시물 작성 페이지에서 작성 후 db에서 가져와야함 -->
-            <img class="feed_img" src="https://i.postimg.cc/kGw4SRKS/gyuhyeon.jpg">
-          </a>
-        </div>
-        <div class="feed_content">
-          <!-- 아래 게시글도 게시물 작성 페이지에서 작성 후 db에서 가져와야함 -->
-          <p style="font-size: 14px;">프론트 너무 어렵다 ㄹㅇ</p>{% comment %}{{ tw.content }}{% endcomment %}
-        </div>
-        <form action="" method="post" style="margin-top: 20px;">
-          {% csrf_token %}
-          <div class="comment_box">
-            <div class="like_icon">
-              <div class="like">
-                <button style="display: block" onclick="change();" id="emptyheart">
-                  <i class="fa-regular fa-heart" aria-hidden="true"></i>
-                </button>
-                <button style="display: none" onclick="change();" id="heart">
-                  <i class="fa-solid fa-heart" aria-hidden="true"></i>
-                </button>
-              </div>
-            </div>
-            <div class="comment">
-              <input type="text" class="form-control" placeholder="댓글" aria-label="First name" name="my-comment"
-                id="my-comment" style="width: 400px;">
-            </div>
-            <button onclick="Comment()" type="submit" class="btn btn-dark" style="width: 70px;">게시</button>
-          </div>
-        </form>
-        <!-- 태그 조건문(게시물 작성 페이지에서 입력한 태그 db에서 가져와야함) -->
-        {% comment %}{% if tw.tags.all %}{% endcomment %}
-        <!-- 태그 반복문 -->
-        {% comment %}{% for tag in tw.tags.all %}{% endcomment %}
-        <div class="tags">
-          <div class="card-body">
-            <!-- 태그 선택 시 해당 태그가 있는 모든 게시물 보여주기(페이지나 모달 창 만들어야 할 것 같음) -->
-            {% comment %}<a href="{% url 'tagged_object_list' tag.name %}" style="color:black;">{% endcomment %}
-              <!-- 게시물 작성 페이지에서 입력한 태그 데이터를 가져와야함 -->
-              <a href="#" class="card-link" style="color:black;">#프론트{% comment %}{{ tag.name }}{% endcomment %}</a>
-              <a href="#" class="card-link">#백엔드{% comment %}{{ tag.name }}{% endcomment %}</a>
-          </div>
-        </div>
-        <!-- 태그 반복문, 조건문 종료 -->
-        {% comment %}{% endfor %}{% endcomment %}
-        {% comment %}{% endif %}{% endcomment %}
-      </div>
-    </div>
-    <div class="col">
-      <div class="feed_box">
-        <div class="profile_box">
-          <div class="profile_img_box">
-            <img class="profile_img" src="https://t1.daumcdn.net/cafeattach/aVeZ/96bb985f315f63a2fe16120d8b0fec4b589ac4e9">
-          </div>
-          <!-- 작성자 아이디 데이터에서 가져와야함-->
-          <span class="author"> suzy022 </span> {% comment %}{{ tw.id }}{% endcomment %}
-          <!-- 게시글 작성자 닉네임, 작성 시간 데이터에서 가져와야함 -->
-          <span style="font-size: small;">전</span>{% comment %}{{ tw.author.username }}-{{tw.created_at|timesince}}{%
-          endcomment %}
-          <!-- 작성자가 유저인 경우만 삭제 버튼 출력 -->
-          {% comment %}{% if tw.author == user %}{% endcomment %}
-          <button type="button" class="btn btn-outline-secondary" onclick="delete_feed()"
-            style="width: auto; height: 30px; margin-left: auto; margin-right: ;">삭제</button>
-          {% comment %}{% endif %}{% endcomment %}
-        </div>
-        <div class="feed">
-          <!-- 게시물 사진 클릭 시 게시물 상세페이지로 이동 -->
-          <a href="/read/">
-            <!-- 아래 사진을 가져오는 태그는 게시물 작성 페이지에서 작성 후 db에서 가져와야함 -->
-            <img class="feed_img" src="https://i.postimg.cc/kGw4SRKS/gyuhyeon.jpg">
-          </a>
-        </div>
-        <div class="feed_content">
-          <!-- 아래 게시글도 게시물 작성 페이지에서 작성 후 db에서 가져와야함 -->
-          <p style="font-size: 14px;">프론트 너무 어렵다 ㄹㅇ</p>{% comment %}{{ tw.content }}{% endcomment %}
-        </div>
-        <form action="" method="post" style="margin-top: 20px;">
-          {% csrf_token %}
-          <div class="comment_box">
-            <div class="like_icon">
-              <div class="like">
-                <button style="display: block" onclick="change();" id="emptyheart">
-                  <i class="fa-regular fa-heart" aria-hidden="true"></i>
-                </button>
-                <button style="display: none" onclick="change();" id="heart">
-                  <i class="fa-solid fa-heart" aria-hidden="true"></i>
-                </button>
-              </div>
-            </div>
-            <div class="comment">
-              <input type="text" class="form-control" placeholder="댓글" aria-label="First name" name="my-comment"
-                id="my-comment" style="width: 400px;">
-            </div>
-            <button onclick="Comment()" type="submit" class="btn btn-dark" style="width: 70px;">게시</button>
-          </div>
-        </form>
-        <!-- 태그 조건문(게시물 작성 페이지에서 입력한 태그 db에서 가져와야함) -->
-        {% comment %}{% if tw.tags.all %}{% endcomment %}
-        <!-- 태그 반복문 -->
-        {% comment %}{% for tag in tw.tags.all %}{% endcomment %}
-        <div class="tags">
-          <div class="card-body">
-            <!-- 태그 선택 시 해당 태그가 있는 모든 게시물 보여주기(페이지나 모달 창 만들어야 할 것 같음) -->
-            {% comment %}<a href="{% url 'tagged_object_list' tag.name %}" style="color:black;">{% endcomment %}
-              <!-- 게시물 작성 페이지에서 입력한 태그 데이터를 가져와야함 -->
-              <a href="#" class="card-link" style="color:black;">#프론트{% comment %}{{ tag.name }}{% endcomment %}</a>
-              <a href="#" class="card-link">#백엔드{% comment %}{{ tag.name }}{% endcomment %}</a>
-          </div>
-        </div>
-        <!-- 태그 반복문, 조건문 종료 -->
-        {% comment %}{% endfor %}{% endcomment %}
-        {% comment %}{% endif %}{% endcomment %}
-      </div>
-    </div>
+    {% endfor %}
   </div>
 </body>
 </html>
