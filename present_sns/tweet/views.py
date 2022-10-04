@@ -40,5 +40,5 @@ def user_profile(request):
             redirect('/main')
             
 
-def defualt_comment(request):
-    pass
+# def defualt_comment(request):
+#     pass
