@@ -8,4 +8,4 @@ urlpatterns = [
     path('', include('user.urls')), # hyeong - user.urls 로 보내줌
     path('', include('tweet.urls')),
 ]
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) # Beomki 이미지 불러오는 코드
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) # Beomki static 불러오는 코드

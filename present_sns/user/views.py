@@ -25,7 +25,7 @@ def login(request):
         if not user:
             return render(request,'user/login.html', {'error':'이름 혹은 패스워드를 확인 해 주세요'}) 
         django_login(request, user) 
-        return redirect('/main')
+        return redirect('/main_user')
 
     elif request.method == 'GET':
         return render(request, 'user/login.html')
@@ -45,6 +45,7 @@ def signup(request):
         useremail = request.POST.get('useremail','')
         phone = request.POST.get('phone','')
         bio = request.POST.get('bio','')
+
 
         if userpw != userpw2:
             return render(request, 'user/signup.html',{})
@@ -73,10 +74,13 @@ def my_profile(request):
 def read(request):
     return render(request, 'tweet/read.html')
 
+
 @csrf_exempt
 def profileupdate(request):
     return render(request, 'user/profileupdate.html')
 
+
 @csrf_exempt
 def my_profile(request):
     return render(request, 'user/my_profile.html')
+
