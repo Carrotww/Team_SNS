@@ -1,3 +1,11 @@
+
+/* 메인 페이지 css */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    background-color: #FAFAFA;
+
 .body {
     background-color: #f9f9f9;
 }
@@ -32,270 +40,103 @@
     
 }
 
-.loginWindow input::placeholder{
-    font-size: 12px;
-    font-weight:100;
-}
 
-.loginWindow input:focus {
-    outline:none;
-    border: 1px solid #aaaaaa;
-    border-radius: 4px;
 }
+.col {
+    display: flex;
+    justify-content:center;
+    margin-bottom: 50px;
 
-.ordinaryLogin {
-    height: 37px;
+}
+.profile_box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
     margin-bottom: 10px;
-    box-sizing: border-box;
-    border: 0px;
-    border-radius: 5px;
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: 700;
 }
 
-.unactivatedLoginColor {
-    background-color: #acd5e8;
+.profile_img_box {
+    width: 40px;
+    height: 40px;
+    border-radius: 70%;
+    overflow: hidden;
 }
 
-.activatedLoginColor {
-    background-color: #00aeff;
+.profile_img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
-.loginWindow * {
-    width: 70%;
-    margin-left: auto;
-    margin-right: auto;
+.author {
+    font-size: 18px;
+    padding: 0px 10px;
+    font-weight: bold;
+}
+
+.feed_box {
+    background-color: white;
+    width: 600px;
+    height: auto;
+    margin: 10px;
+    min-height: 750px;
+    padding-bottom: 10px;
+    border: 1px #CCD0D5 solid;
+}
+.feed a{
+    display: flex;
+    justify-content: center;
+}
+.feed_img {
+    width: 90%;
+    object-fit: contain;
+    min-height:500px;
     
 }
 
-#instaLogo {
-    margin: 40px auto 30px;
-    max-width: 175px;
+.feed a:hover img,
+.feed a:focus img {
+    transform: scale(1.03)
 }
 
-.inlineToBlock {
-    display: block;
-}
-
-/*
-.horizonAndOr {
-    margin:10% 0;
-    width:100%;
-    box-sizing: border-box;
-}
-*/
-.leftHr {
-    float:left;
-    width:35%;
-    box-sizing: border-box;
-}
-
-.or{
-    float:left;
-    width:17%;
-    margin:2px 5%;
-    font-size: 13px;
-    box-sizing: border-box;
-
-    color: #999999;
-    font-size: 14px;
-    font-weight: 700;
-    margin:0px 15px;
-}
-
-.rightHr {
-    float: right;
-    width:35%;
-    box-sizing: border-box;
-}
-
-.facebookLogin {
+.feed_content {
     margin-top: 10px;
-    margin-bottom:10px;
-    background-color: rgba(255, 255, 255, 0.5);
-  
-    height: 37px;
-    
-    box-sizing: border-box;
-    border: 0px;
-    border-radius: 5px;
-    color: #00628f;
-    font-size: 15px;
-    font-weight: 700;
+    padding: 0px 30px;
 }
 
-.facebookIcon {
-    width:13px;
+.like_icon {
+    display: flex;
+    align-items: center;
 }
 
-
-.haveAccount {
-    background-color: #fcfcfc;
-    margin-top: 10px;
-    padding: 15px;
-    border: 1px solid #dfdfdf;
-    border-radius: 3px;
+#heart {
+    padding: 0;
+    border: 0;
+    outline: 0;
+    color: red;
+    background-color: transparent;
 }
 
-.haveAccount p {
-    font-size: 14px;
-    font-weight: 300;
-    color: #333333;
+#emptyheart {
+    padding: 0;
+    border: 0;
+    outline: 0;
+    color: red;
+    background-color: transparent;
 }
 
-.haveAccount p a{
-    font-weight: 600;
-    color: #248ae3;
+.comment_box {
+    display: flex;
+    justify-content:space-evenly
 }
 
-.noneunderline {
-    text-decoration:none;
-}body {
-    background-color: #f9f9f9;
+.comment {
+    display: flex;
+    width: auto;
+    height: auto;
 }
 
-.contentsWrap{
-    margin: 90px auto;
-    max-width: 340px;
-    border: none;
-    padding: 20px;
-    text-align: center;
-}
-
-.loginWindow {
-    background-color: #fcfcfc;
-    padding: 10px auto;
-    border: 1px solid #dfdfdf;
-    border-radius: 3px;
-}
-
-.loginWindow input{
-    margin-bottom: 10px;
-    background-color: #f5f5f5;
-    height: 37px;
-    padding: 10px 10px;
-    box-sizing: border-box;
-    border: 1px solid #eaeaea;
-    border-radius: 4px;
-}
-
-.loginWindow input::placeholder{
-    font-size: 12px;
-    font-weight:100;
-}
-
-.loginWindow input:focus {
-    outline:none;
-    border: 1px solid #aaaaaa;
-    border-radius: 4px;
-}
-
-.ordinaryLogin {
-    height: 37px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-    border: 0px;
-    border-radius: 5px;
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: 700;
-}
-
-.unactivatedLoginColor {
-    background-color: #acd5e8;
-}
-
-.activatedLoginColor {
-    background-color: #00aeff;
-}
-
-.loginWindow * {
-    width: 70%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#instaLogo {
-    margin: 40px auto 30px;
-    max-width: 175px;
-}
-
-.inlineToBlock {
-    display: block;
-}
-
-/*
-.horizonAndOr {
-    margin:10% 0;
-    width:100%;
-    box-sizing: border-box;
-}
-*/
-.leftHr {
-    float:left;
-    width:35%;
-    box-sizing: border-box;
-}
-
-.or{
-    float:left;
-    width:17%;
-    margin:2px 5%;
-    font-size: 13px;
-    box-sizing: border-box;
-
-    color: #999999;
-    font-size: 14px;
-    font-weight: 700;
-    margin:0px 15px;
-}
-
-.rightHr {
-    float: right;
-    width:35%;
-    box-sizing: border-box;
-}
-
-.facebookLogin {
-    margin-top: 10px;
-    margin-bottom:10px;
-    background-color: rgba(255, 255, 255, 0.5);
-  
-    height: 37px;
-    
-    box-sizing: border-box;
-    border: 0px;
-    border-radius: 5px;
-    color: #00628f;
-    font-size: 15px;
-    font-weight: 700;
-}
-
-.facebookIcon {
-    width:13px;
-}
-
-
-.haveAccount {
-    background-color: #fcfcfc;
-    margin-top: 10px;
-    padding: 15px;
-    border: 1px solid #dfdfdf;
-    border-radius: 3px;
-}
-
-.haveAccount p {
-    font-size: 14px;
-    font-weight: 300;
-    color: #333333;
-}
-
-.haveAccount p a{
-    font-weight: 600;
-    color: #248ae3;
-}
-
-.noneunderline {
-    text-decoration:none;
+.tags {
+    margin-top: 20px;
 }

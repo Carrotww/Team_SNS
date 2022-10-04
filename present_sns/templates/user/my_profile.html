@@ -18,7 +18,7 @@
   <link
     href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
     rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/main_user.css' %}">
+  <link rel="stylesheet" href="{% static 'css/my_profile.css' %}">
   <script>
     function Comment() {
       alert('댓글 작성 완료!');
@@ -30,10 +30,10 @@
       if(i>=state.length){
         i=0;
       }
-      var b = document.getElementById("heart");
+      var b = document.getElementsByClassName("good")[0];
       b.style.display=state[i];
         i++;
-      var d = document.getElementById("emptyheart");
+      var d = document.getElementsByClassName("bad")[0];
       d.style.display=state[j];
       j--
       if(j<0){
@@ -44,57 +44,51 @@
 </head>
 
 <body class="w3-theme-l5">
-  <div class="container">  
-    <div class="item" style="max-width:200px; margin-top:25px; margin-left:10px;">
- <!-- Navbar on small screens -->
-      <div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
-        <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
-        <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
-        <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
-        <a href="#" class="w3-bar-item w3-button w3-padding-large">My Profile</a>
-      </div> 
-            <!-- Profile -->
-            <div class="w3-card w3-white">
-              <div class="w3-container">
-                <h4 class="w3-center" style="padding: 10px 0 5px 0; font-weight: bold;">My Profile</h4>
-                <p class="w3-center"><img src="https://i.postimg.cc/kGw4SRKS/gyuhyeon.jpg" class="w3-circle"
-                    style="height:106px;width:106px" alt="Avatar"></p>
-                <hr>
-                <div class="intro">
-                  <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> Designer, UI</p>
-                  <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> London, UK</p>
-                  <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm" style="max-width:250px; margin-top:20px;">
+        <div class="w3-card w3-white">
+          <div class="w3-container">
+            <h4 class="w3-center" style="padding: 10px 0 5px 0; font-weight: bold;">My Profile</h4>
+            <p class="w3-center"><img src="https://i.postimg.cc/kGw4SRKS/gyuhyeon.jpg" class="w3-circle"
+                style="height:106px;width:106px" alt="Avatar"></p>
+            <hr>
+            <div class="intro">
+              {% if user.is_authenticated %}
+                  <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> 닉네임:<br>{{user.nickname}}</p>
+                  <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> e-mail:<br>{{user.email}}</p>
+                  <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> 자기소개:<br>{{user.bio}}</p>
+                  <a href="{% url 'user:profileupdate' %}"><class="w3-bar-item w3-button w3-padding-large">정보 수정하기</a>
                   <p> Follow 000 </p>
                   <p>Follower 000 </p>
-                </div>
-              </div>
+                  {% endif %}
             </div>
-            <br>
-        <!-- Interests -->
-            <div class="w3-card w3-white w3-hide-small" style="padding-top:10px;">
-              <div class="w3-container" style="font-weight: bold;">
-                <div style="font-size: 25px;"><p>Interests</p></div>
-                <p>
-                  <span class="w3-tag w3-small w3-theme-l5">News</span>
-                  <span class="w3-tag w3-small w3-theme-l5">W3Schools</span>
-                  <span class="w3-tag w3-small w3-theme-l5">Labels</span>
-                  <span class="w3-tag w3-small w3-theme-l5">Games</span>
-                  <span class="w3-tag w3-small w3-theme-l5">Friends</span>
-                  <span class="w3-tag w3-small w3-theme-l5">Games</span>
-                  <span class="w3-tag w3-small w3-theme-l5">Friends</span>
-                  <span class="w3-tag w3-small w3-theme-l5">Food</span>
-                  <span class="w3-tag w3-small w3-theme-l5">Design</span>
-                  <span class="w3-tag w3-small w3-theme-l5">Art</span>
-                  <span class="w3-tag w3-small w3-theme-l5">Photos</span>
-                </p>
-              </div>
-            </div>
-            <br>
-    </div>        
-    <div class="item">
-      <!-- Middle Column -->
-      <div class="container">
-        <div class="main_feed" style="margin-left:30px; margin-top:5px;" >
+          </div>
+        </div>
+        <br>
+    <!-- Interests -->
+        <div class="w3-card w3-white w3-hide-small" style="padding-top:10px;">
+          <div class="w3-container" style="font-weight: bold;">
+            <div style="font-size: 25px;"><p>Interests</p></div>
+            <p>
+              <span class="w3-tag w3-small w3-theme-l5">News</span>
+              <span class="w3-tag w3-small w3-theme-l5">W3Schools</span>
+              <span class="w3-tag w3-small w3-theme-l5">Labels</span>
+              <span class="w3-tag w3-small w3-theme-l5">Games</span>
+              <span class="w3-tag w3-small w3-theme-l5">Friends</span>
+              <span class="w3-tag w3-small w3-theme-l5">Games</span>
+              <span class="w3-tag w3-small w3-theme-l5">Friends</span>
+              <span class="w3-tag w3-small w3-theme-l5">Food</span>
+              <span class="w3-tag w3-small w3-theme-l5">Design</span>
+              <span class="w3-tag w3-small w3-theme-l5">Art</span>
+              <span class="w3-tag w3-small w3-theme-l5">Photos</span>
+            </p>
+          </div>
+        </div>
+        <br>
+      </div>
+      <div class="col-sm">
+        <div class="main_feed" style="margin-left:20px; margin-top:5px;" >
           {% comment %}{% for fd in feed %}{% endcomment %}
             <div class="feed_box">
               <div class="profile_box">
@@ -113,30 +107,6 @@
               <div class="feed_content">
                 <p class="feed_txt">프론트 너무 어렵다 ㄹㅇ</p>
               </div>
-              <form action="" method="post">
-                {% csrf_token %}
-                <div class="container" style="background-color: white;">
-                  <div class="item">
-                  <div class="feed_icon">
-                    <div class="like">
-                      <button style="display: block" onclick="change();" id="emptyheart">
-                        <i class="fa-regular fa-heart" aria-hidden="true"></i>
-                      </button>
-                      <button style="display: none" onclick="change();" id="heart">  
-                        <i class="fa-solid fa-heart" aria-hidden="true"></i>
-                      </button>
-                    </div>  
-                  </div>
-                  </div>
-                  <div class="item" style="margin: 0 15px 0 15px;">
-                  <input type="text" class="form-control" placeholder="댓글" aria-label="First name" name="my-comment"
-                    id="my-comment" style="width: 340px; margin:auto;">
-                  </div>
-                  <div class="item">  
-                  <button onclick="Comment()" type="submit" class="btn btn-dark">게시</button>
-                  </div>
-                </div>  
-              </form>
               {% comment %}{% for tag in tw.tags.all %}{% endcomment %}
               {% comment %}{% if tw.tags.all %}{% endcomment %}
               <div class="tags">
@@ -149,14 +119,33 @@
     
               {% comment %}{% endfor %}{% endcomment %}
               </div>
+              <form action="" method="post"></form>
+                {% csrf_token %}
+                <div class="feed_icon">
+                  <div class="like" style="margin-left: auto;">
+                    <button
+                      style="display: block"
+                      onclick="change();"
+                      class="bad"
+                    >
+                      <i class="fa-regular fa-heart" aria-hidden="true"></i>
+                    </button>
+                    <button
+                      style="display: none"
+                      onclick="change();"
+                      class="good"
+                    >
+                      <i class="fa-solid fa-heart" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>  
             </div>
-        </div>  
-      </div>    
-    </div>  
-    <div class="item">
-      <!-- Middle Column -->
-      <div class="container">
-        <div class="main_feed" style="margin-top:5px;">
+          </div> 
+        </div>     
+      </div>
+      <div class="col-sm">
+        <div class="main_feed" style="margin-left:20px; margin-top:5px;" >
           {% comment %}{% for fd in feed %}{% endcomment %}
             <div class="feed_box">
               <div class="profile_box">
@@ -175,31 +164,6 @@
               <div class="feed_content">
                 <p class="feed_txt">프론트 너무 어렵다 ㄹㅇ</p>
               </div>
-
-              <form action="" method="post">
-                {% csrf_token %}
-                <div class="container" style="background-color: white;">
-                  <div class="item">
-                  <div class="feed_icon">
-                    <div class="like">
-                      <button style="display: block" onclick="change();" id="emptyheart">
-                        <i class="fa-regular fa-heart" aria-hidden="true"></i>
-                      </button>
-                      <button style="display: none" onclick="change();" id="heart">  
-                        <i class="fa-solid fa-heart" aria-hidden="true"></i>
-                      </button>
-                    </div>
-                  </div>
-                  </div>
-                  <div class="item" style="margin: 0 15px 0 15px;">
-                  <input type="text" class="form-control" placeholder="댓글" aria-label="First name" name="my-comment"
-                    id="my-comment" style="width: 340px; margin:auto;">
-                  </div>
-                  <div class="item">  
-                  <button onclick="Comment()" type="submit" class="btn btn-dark">게시</button>
-                  </div>
-                </div> 
-              </form>
               {% comment %}{% for tag in tw.tags.all %}{% endcomment %}
               {% comment %}{% if tw.tags.all %}{% endcomment %}
               <div class="tags">
@@ -212,42 +176,33 @@
     
               {% comment %}{% endfor %}{% endcomment %}
               </div>
+              <form action="" method="post"></form>
+                {% csrf_token %}
+                <div class="feed_icon">
+                  <div class="like" style="margin-left: auto;">
+                    <button
+                      style="display: block"
+                      onclick="change();"
+                      class="bad"
+                    >
+                      <i class="fa-regular fa-heart" aria-hidden="true"></i>
+                    </button>
+                    <button
+                      style="display: none"
+                      onclick="change();"
+                      class="good"
+                    >
+                      <i class="fa-solid fa-heart" aria-hidden="true"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>  
             </div>
-        </div>  
-      </div>    
-    </div>  
+          </div> 
+        </div>     
+      </div> 
+    </div>
   </div>
-    <!-- End Page Container -->
-  </div>
-  <br>
-
-  <!-- Footer -->
-
-  <script>
-    // Accordion
-    function myFunction(id) {
-      var x = document.getElementById(id);
-      if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-        x.previousElementSibling.className += " w3-theme-d1";
-      } else {
-        x.className = x.className.replace("w3-show", "");
-        x.previousElementSibling.className =
-          x.previousElementSibling.className.replace(" w3-theme-d1", "");
-      }
-    }
-
-    // Used to toggle the menu on smaller screens when clicking on the menu button
-    function openNav() {
-      var x = document.getElementById("navDemo");
-      if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-      } else {
-        x.className = x.className.replace(" w3-show", "");
-      }
-    }
-  </script>
-
 </body>
 
 </html>

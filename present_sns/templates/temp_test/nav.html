@@ -1,12 +1,13 @@
 {% comment %} 네비 {% endcomment %}
 <!DOCTYPE html>
-​
+
 <html lang="en">
 {% load static %}
-​
+
 
 <head>
-    ​
+
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,10 +25,12 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <title>Instagram</title>
     {% block style %}
-    ​
-    ​
+
+
+
     {% endblock%}
-    ​
+
+
 </head>
 <style>
     .modal_overlay {
@@ -66,8 +69,16 @@
         width: 780px;
         height: 548px;
     }
+
+
+    .button_s {
+        border: 0;
+        outline: 0;
+        background-color: transparent;
+    }
+
 </style>
-​
+
 
 <body>
     
@@ -81,18 +92,18 @@
                 <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="">
             </div>
             <!-- Logo container ends here -->
-            ​
+            
             <!-- Created search container  -->
             <div class="search">
                 <input type="text" placeholder="Search" name="search_bar">
             </div>
             <!-- search Container ends here  -->
-            ​
+            
             <!-- Created icons container  -->
             <div class="icons">
                 <!-- Home starts  -->
                 <div class="home">
-                    <a href="#">
+                    <a href="/main/"> 
                         <svg aria-label="Home" class="_8-yf5 " color="#262626" fill="#262626" height="22" role="img"
                             viewBox="0 0 48 48" width="22">
                             <path id="home1"
@@ -103,7 +114,7 @@
 
                 </div>
                 <!-- Home ends  -->
-                ​
+                
                 <!-- create starts  -->
                 <div id="nav_bar_add_box" class="create">
                     <a href="#">
@@ -122,7 +133,7 @@
                     </a>
                 </div>
                 <!-- create ends  -->
-                ​
+                
                 <!-- Heart starts   -->
                 <div class="heart">
                     <a href="#">
@@ -135,12 +146,16 @@
                     </a>
                 </div>
                 <!-- Heart ends  -->
-                ​
+                
                 <!-- Profile image starts  -->
                 {% if user.is_authenticated %}
                 <div class="profile-img">
                     <!-- Profile icon start  -->
-                    <a href="{% url 'user:profileupdate' %}">
+
+                    <a href="{% url 'user:my_profile' %}">
+                        <!-- <a href="/tweet/user_profile/{{ tweet.nickname }}"> -->
+                            <!-- 위 테그로 가면 login된 user nickname의 프로필로 연결됨 -->
+
                         <div class="fa-solid fa-user"
                         style="width:auto;height:32px; display: flex; align-items: center; padding-top: 5px; color: black;"
                         alt="">
@@ -153,8 +168,10 @@
                     <!-- Profile icons ends  -->
                 </div> <!-- Profile image ends  -->
 
-            </div><!-- Icons container ends here  -->
-            <!-- logout button start  -->
+
+                </div><!-- Icons container ends here  -->
+                <!-- logout button start  -->
+
                 {% if user.is_authenticated %}
                 <a href="{% url 'user:logout' %}" class="btn btn-dark">Logout</a>
                 {% comment %} {{ user.username }} //현재 접속중인 아이디 {% endcomment %}
@@ -162,9 +179,9 @@
                 <a href="{% url 'user:login' %}" class="btn btn-dark">Login</a>
                 {% endif %}
             <!-- logout button end  -->
-            ​
+            
         </div><!-- Container ends here  -->
-        ​
+        
     </nav><!-- Nav ends here -->
     <!-- 드레그로 이미지 불러오는 부분 -->
     <!-- modal overlay 검은색 뒷 배경 -->
@@ -180,7 +197,11 @@
                 </div>
                 <div>
                     <!-- 닫기 버튼을 넣기위해 -->
-                    <i class="fa-regular fa-circle-xmark">Close</i>
+
+                    <button class="button_s" type="button" id="close_button">
+                        <i class="fa-regular fa-circle-xmark">Close</i>
+                    </button>
+
                 </div>
             </div>
             <div class="img_upload_space" style="background: burlywood; width: 760; height: 540px; margin-top: 20px;">
@@ -204,7 +225,11 @@
                 </div>
                 <div>
                     <!-- 닫기 버튼을 넣기위해 -->
-                    <i class="fa-regular fa-circle-xmark">Close</i>
+
+                    <button class="button_s" type="button" id="2_close_button">
+                        <i class="fa-regular fa-circle-xmark">Close</i>
+                    </button>
+
                 </div>
             </div>
             <div style="display: flex; flex-direction:row;">
@@ -214,7 +239,13 @@
                 <div style="border-left: solid 1px gray; margin-top: 20px;">
                     <div>
                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="9"
-                            style="width: 274px; height: 500px;"></textarea>
+
+                            style="width: 274px; height: 400px;">내용을 적어주세요</textarea>
+                    </div>
+                    <div>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="9"
+                            style="width: 274px; height: 100px;">tag</textarea>
+
                     </div>
                     <div>
                         <i type="button" class="fa-solid fa-forward fa-1x" style="padding: 0 100px;">공유하기</i>
@@ -237,9 +268,11 @@
                 display: 'flex'
             });
             // // body의 스크롤 없애는법
-            // $(document.body).scc({
-            //     overflow: 'hidden'
-            // })
+
+            $(document.body).scc({
+                overflow: 'hidden'
+            })
+
         });
         $('.img_upload_space')
             // dragover 마우스를 올리면 dragover 함수가 실행
@@ -265,6 +298,15 @@
                 });
             }
         }
+
+        $('#close_button').click(function () {
+            $('#first_modal').hide();
+        })
+        $('#2_close_button').click(function () {
+            $('#second_modal').hide();
+        })
+
+
 
         function uploadFiles(e) {
             e.stopPropagation();
@@ -292,7 +334,9 @@
                     "outline": "none",
                     "background-size": "100% 100%",
                     // background-repeat : 배경 이미지 반복 지정
-                    // "background-repeat": "no-repeat",
+
+                    "background-repeat": "no-repeat",
+
                     "background-position": "center"
 
                 });
@@ -303,10 +347,13 @@
 
             }
         }
-</script>
-        {% block navigator %}
 
-        {% endblock %}
-</body >
-​
-</html >
+    </script>
+    {% block navigator %}
+
+    {% endblock %}
+</body>
+
+
+</html>
+

@@ -1,98 +1,105 @@
 /* 게시글 상세페이지 css */
 .container {
-    display: flex;
-    justify-content: center;
-    padding-top: 10px;
-  }
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+}
 
-  .main_feed {
-    width: auto;
-    height: 2000px;
-    display: flex;
-    flex-direction: column;
-  }
+.main_feed {
+  width: auto;
+  height: 2000px;
+  display: flex;
+  flex-direction: column;
+}
 
-  .profile_box {
-    padding: 10px;
-    display: flex;
-    align-items: center;
-  }
+.profile_box {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+}
 
-  .author {
-    font-size: 18px;
-    padding: 0px 10px;
-    font-weight: bold;
-  }
+.author {
+  font-size: 18px;
+  padding: 0px 10px;
+  font-weight: bold;
+}
 
-  .profile_img_box {
-    width: 40px;
-    height: 40px;
-    border-radius: 70%;
-    overflow: hidden;
-  }
+.profile_img_box {
+  width: 40px;
+  height: 40px;
+  border-radius: 70%;
+  overflow: hidden;
+}
 
-  .profile_img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+.profile_img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-  .feed_box {
-    background-color: white;
-    width: 500px;
-    margin: 0px;
-    min-height: auto;
-    padding-bottom: 10px;
-    border: 1px #CCD0D5 solid;
-  }
+.feed_box {
+  background-color: white;
+  width: 500px;
+  min-height: 800px;
+  padding-bottom: 10px;
+  border: 1px #CCD0D5 solid;
+}
 
-  .feed_img {
-    width: 100%;
-    object-fit: contain;
-  }
+.feed_img {
+  width: 100%;
+  object-fit: contain;
+}
 
-  /* .feed a:hover img,
+/* .feed a:hover img,
   .feed a:focus img {
     transform: scale(0.9);
   } */
 
-  .feed_content {
-    margin-top: 10px;
-    padding: 0px 10px;
-  }
+.feed_content {
+  margin-top: 10px;
+  padding: 0px 10px;
+  margin-left: 10px;
+}
 
-  .feed_txt {
-    font-size: 14px;
-  }
+.feed_txt {
+  font-size: 14px;
+}
 
-  .feed_icon {
-    padding: 5px 5px 0px 5px;
-    display: flex;
-    justify-content: space-between;
-    cursor: pointer;
-  }
+.feed_icon {
+  padding: 5px 5px 0px 5px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
 
-  .feed_icon span {
-    padding: 7px 0px 5px 10px;
-  }
+.feed_icon span {
+  padding: 7px 0px 5px 10px;
+}
 
-  .form {
-    display: flex;
-  }
-  #emptyheart {
-    padding: 0;
-    border: 0;
-    outline: 0;
-    color: red;
-    background-color: transparent;
-  }
-  #heart {
-    padding: 0;
-    border: 0;
-    outline: 0;
-    color: red;
-    background-color: transparent;
-  }
-  .intro {
-    font-weight: bold;
-  }
+.form {
+  display: flex;
+}
+
+#emptyheart {
+  padding: 0;
+  border: 0;
+  outline: 0;
+  color: red;
+  background-color: transparent;
+}
+
+#heart {
+  padding: 0;
+  border: 0;
+  outline: 0;
+  color: red;
+  background-color: transparent;
+}
+
+.intro {
+  font-weight: bold;
+}
+
+.tags {
+  margin-left:10px;
+}
