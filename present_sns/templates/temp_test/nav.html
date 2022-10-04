@@ -4,8 +4,9 @@
 <html lang="en">
 {% load static %}
 ​
+
 <head>
-​
+    ​
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,14 +17,58 @@
     <!-- Linking Js file  -->
     <script src="https://kit.fontawesome.com/c949f64c3b.js" crossorigin="anonymous"></script>
     <!-- Title  -->
+    <!-- fontawosome -->
+    <script src="https://kit.fontawesome.com/c949f64c3b.js" crossorigin="anonymous"></script>
+
+    <!-- Jquery 아이콘 눌르면 팝업되게(링크거는방법) -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <title>Instagram</title>
     {% block style %}
-​
-​
+    ​
+    ​
     {% endblock%}
-​
+    ​
 </head>
+<style>
+    .modal_overlay {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(1.5px);
+        -webkit-backdrop-filter: blur(1.5px);
+    }
+
+    .modal_window {
+        background: white;
+        backdrop-filter: blur(13.5px);
+        -webkit-backdrop-filter: blur(13.5px);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        width: 800px;
+        height: 600px;
+        position: relative;
+        padding: 10px;
+
+    }
+
+    .modal_image_upload {
+        outline: 2px dashed black;
+        outline-offset: -10px;
+        text-align: center;
+        transition: all .15s ease-in-out;
+        width: 780px;
+        height: 548px;
+    }
+</style>
 ​
+
 <body>
     
     <!-- Created Nav  -->
@@ -36,61 +81,61 @@
                 <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="">
             </div>
             <!-- Logo container ends here -->
-​
+            ​
             <!-- Created search container  -->
             <div class="search">
                 <input type="text" placeholder="Search" name="search_bar">
             </div>
             <!-- search Container ends here  -->
-​
+            ​
             <!-- Created icons container  -->
             <div class="icons">
                 <!-- Home starts  -->
                 <div class="home">
                     <a href="#">
                         <svg aria-label="Home" class="_8-yf5 " color="#262626" fill="#262626" height="22" role="img"
-                        viewBox="0 0 48 48" width="22">
-                        <path id="home1"
-                            d="M45.5 48H30.1c-.8 0-1.5-.7-1.5-1.5V34.2c0-2.6-2.1-4.6-4.6-4.6s-4.6 2.1-4.6 4.6v12.3c0 .8-.7 1.5-1.5 1.5H2.5c-.8 0-1.5-.7-1.5-1.5V23c0-.4.2-.8.4-1.1L22.9.4c.6-.6 1.6-.6 2.1 0l21.5 21.5c.3.3.4.7.4 1.1v23.5c.1.8-.6 1.5-1.4 1.5z">
-                        </path>
-                    </svg>
+                            viewBox="0 0 48 48" width="22">
+                            <path id="home1"
+                                d="M45.5 48H30.1c-.8 0-1.5-.7-1.5-1.5V34.2c0-2.6-2.1-4.6-4.6-4.6s-4.6 2.1-4.6 4.6v12.3c0 .8-.7 1.5-1.5 1.5H2.5c-.8 0-1.5-.7-1.5-1.5V23c0-.4.2-.8.4-1.1L22.9.4c.6-.6 1.6-.6 2.1 0l21.5 21.5c.3.3.4.7.4 1.1v23.5c.1.8-.6 1.5-1.4 1.5z">
+                            </path>
+                        </svg>
                     </a>
-                    
+
                 </div>
                 <!-- Home ends  -->
-​
+                ​
                 <!-- create starts  -->
-                <div class="create">
+                <div id="nav_bar_add_box" class="create">
                     <a href="#">
                         <svg aria-label="New Post" class="_8-yf5 " color="#262626" fill="#262626" height="22" role="img"
-                        viewBox="0 0 48 48" width="22">
-                        <path
-                            d="M31.8 48H16.2c-6.6 0-9.6-1.6-12.1-4C1.6 41.4 0 38.4 0 31.8V16.2C0 9.6 1.6 6.6 4 4.1 6.6 1.6 9.6 0 16.2 0h15.6c6.6 0 9.6 1.6 12.1 4C46.4 6.6 48 9.6 48 16.2v15.6c0 6.6-1.6 9.6-4 12.1-2.6 2.5-5.6 4.1-12.2 4.1zM16.2 3C10 3 7.8 4.6 6.1 6.2 4.6 7.8 3 10 3 16.2v15.6c0 6.2 1.6 8.4 3.2 10.1 1.6 1.6 3.8 3.1 10 3.1h15.6c6.2 0 8.4-1.6 10.1-3.2 1.6-1.6 3.1-3.8 3.1-10V16.2c0-6.2-1.6-8.4-3.2-10.1C40.2 4.6 38 3 31.8 3H16.2z">
-                        </path>
-                        <path
-                            d="M36.3 25.5H11.7c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5h24.6c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5z">
-                        </path>
-                        <path
-                            d="M24 37.8c-.8 0-1.5-.7-1.5-1.5V11.7c0-.8.7-1.5 1.5-1.5s1.5.7 1.5 1.5v24.6c0 .8-.7 1.5-1.5 1.5z">
-                        </path>
-                    </svg>
+                            viewBox="0 0 48 48" width="22">
+                            <path
+                                d="M31.8 48H16.2c-6.6 0-9.6-1.6-12.1-4C1.6 41.4 0 38.4 0 31.8V16.2C0 9.6 1.6 6.6 4 4.1 6.6 1.6 9.6 0 16.2 0h15.6c6.6 0 9.6 1.6 12.1 4C46.4 6.6 48 9.6 48 16.2v15.6c0 6.6-1.6 9.6-4 12.1-2.6 2.5-5.6 4.1-12.2 4.1zM16.2 3C10 3 7.8 4.6 6.1 6.2 4.6 7.8 3 10 3 16.2v15.6c0 6.2 1.6 8.4 3.2 10.1 1.6 1.6 3.8 3.1 10 3.1h15.6c6.2 0 8.4-1.6 10.1-3.2 1.6-1.6 3.1-3.8 3.1-10V16.2c0-6.2-1.6-8.4-3.2-10.1C40.2 4.6 38 3 31.8 3H16.2z">
+                            </path>
+                            <path
+                                d="M36.3 25.5H11.7c-.8 0-1.5-.7-1.5-1.5s.7-1.5 1.5-1.5h24.6c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5z">
+                            </path>
+                            <path
+                                d="M24 37.8c-.8 0-1.5-.7-1.5-1.5V11.7c0-.8.7-1.5 1.5-1.5s1.5.7 1.5 1.5v24.6c0 .8-.7 1.5-1.5 1.5z">
+                            </path>
+                        </svg>
                     </a>
                 </div>
                 <!-- create ends  -->
-​
+                ​
                 <!-- Heart starts   -->
                 <div class="heart">
                     <a href="#">
                         <svg aria-label="Activity Feed" class="_8-yf5 " color="#262626" fill="#262626" height="22"
-                        role="img" viewBox="0 0 48 48" width="22">
-                        <path
-                            d="M34.6 6.1c5.7 0 10.4 5.2 10.4 11.5 0 6.8-5.9 11-11.5 16S25 41.3 24 41.9c-1.1-.7-4.7-4-9.5-8.3-5.7-5-11.5-9.2-11.5-16C3 11.3 7.7 6.1 13.4 6.1c4.2 0 6.5 2 8.1 4.3 1.9 2.6 2.2 3.9 2.5 3.9.3 0 .6-1.3 2.5-3.9 1.6-2.3 3.9-4.3 8.1-4.3m0-3c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5.6 0 1.1-.2 1.6-.5 1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z">
-                        </path>
-                    </svg>
+                            role="img" viewBox="0 0 48 48" width="22">
+                            <path
+                                d="M34.6 6.1c5.7 0 10.4 5.2 10.4 11.5 0 6.8-5.9 11-11.5 16S25 41.3 24 41.9c-1.1-.7-4.7-4-9.5-8.3-5.7-5-11.5-9.2-11.5-16C3 11.3 7.7 6.1 13.4 6.1c4.2 0 6.5 2 8.1 4.3 1.9 2.6 2.2 3.9 2.5 3.9.3 0 .6-1.3 2.5-3.9 1.6-2.3 3.9-4.3 8.1-4.3m0-3c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5.6 0 1.1-.2 1.6-.5 1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z">
+                            </path>
+                        </svg>
                     </a>
                 </div>
                 <!-- Heart ends  -->
-​
+                ​
                 <!-- Profile image starts  -->
                 {% if user.is_authenticated %}
                 <div class="profile-img">
@@ -103,10 +148,11 @@
                         <a href="{% url 'user:login' %}" class="btn btn-dark">Login</a>
                         {% endif %}
                         </div>
+
                     </a>
                     <!-- Profile icons ends  -->
                 </div> <!-- Profile image ends  -->
-                
+
             </div><!-- Icons container ends here  -->
             <!-- logout button start  -->
                 {% if user.is_authenticated %}
@@ -116,14 +162,151 @@
                 <a href="{% url 'user:login' %}" class="btn btn-dark">Login</a>
                 {% endif %}
             <!-- logout button end  -->
-​
+            ​
         </div><!-- Container ends here  -->
-​
+        ​
     </nav><!-- Nav ends here -->
+    <!-- 드레그로 이미지 불러오는 부분 -->
+    <!-- modal overlay 검은색 뒷 배경 -->
+    <div id="first_modal" class="modal_overlay">
+        <!-- modal window 하얀 창 /및 사진올리는 부분-->
+        <div class="modal_window">
+            <div style="display: flex; flex-direction:row; justify-content: space-between;">
+                <div>
+                    앞부분
+                </div>
+                <div>
+                    새 이미지 업로드
+                </div>
+                <div>
+                    <!-- 닫기 버튼을 넣기위해 -->
+                    <i class="fa-regular fa-circle-xmark">Close</i>
+                </div>
+            </div>
+            <div class="img_upload_space" style="background: burlywood; width: 760; height: 540px; margin-top: 20px;">
+                <div style="text-align: center; padding: 210px 0;">
+                    <i class="fa-solid fa-x-ray fa-4x"></i>
+                    <p>이미지를 넣어주세요!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 2번째 모달 -->
+    <div id="second_modal" class="modal_overlay">
+        <!-- modal window 하얀 창 /및 사진올리는 부분-->
+        <div class="modal_window">
+            <div style="display: flex; flex-direction:row; justify-content: space-between;">
+                <div>
+                    앞부분
+                </div>
+                <div>
+                    새 이미지 업로드
+                </div>
+                <div>
+                    <!-- 닫기 버튼을 넣기위해 -->
+                    <i class="fa-regular fa-circle-xmark">Close</i>
+                </div>
+            </div>
+            <div style="display: flex; flex-direction:row;">
+                <div class="img_upload_space" style="width: 500px; height: 540px; margin-top: 20px;">
+
+                </div>
+                <div style="border-left: solid 1px gray; margin-top: 20px;">
+                    <div>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="9"
+                            style="width: 274px; height: 500px;"></textarea>
+                    </div>
+                    <div>
+                        <i type="button" class="fa-solid fa-forward fa-1x" style="padding: 0 100px;">공유하기</i>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 제이쿼리 링크 연결 -->
+    <script>
+        // $('#id(선택자)or .class명')
+        // nav_bar버튼을 누루면 modal_overlay css의 기능을 flex로 바꿔줄꺼다
+        $('#nav_bar_add_box').click(function () {
+            $('#first_modal').css({
+                display: 'flex'
+            });
+            // // body의 스크롤 없애는법
+            // $(document.body).scc({
+            //     overflow: 'hidden'
+            // })
+        });
+        $('.img_upload_space')
+            // dragover 마우스를 올리면 dragover 함수가 실행
+            .on("dragover", dragOver)
+            .on("dragleave", dragOver)
+            .on("drop", uploadFiles);
+
+        function dragOver(e) {
+            // 모달 같은 경우에는 창이 겹쳐있기 때문에 최상의 매체에 올려놨다는걸 인지하기 위해
+            e.stopPropagation();
+            e.preventDefault();
+            // e = 어떤 액션을 취하고 있는지의 값
+            console.log(e)
+            if (e.type == "dragover") {
+                $(e.target).css({
+                    "background-color": "green",
+                    "outline-offset": "-20px"
+                });
+            } else {
+                $(e.target).css({
+                    "background-color": "orange",
+                    "outline-offset": "-10px"
+                });
+            }
+        }
+
+        function uploadFiles(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            // dragOver(e); //1
+            // 내가 올린 파일을 업로드 하는 부분
+            e.dataTransfer = e.originalEvent.dataTransfer; //2
+            var files = e.target.files || e.dataTransfer.files;
+
+            if (files.length > 1) {
+                alert('하나만 올려라.');
+                return;
+            }
+            if (files[0].type.match(/image.*/)) {
+                // 이미지가 업로드 되면서 첫번째 모달은 없어지고
+                $('#first_modal').css({
+                    display: 'none'
+                });
+                // 2번째 모달이 새로 생김
+                $('#second_modal').css({
+                    display: 'flex'
+                });
+                $('.img_upload_space').css({
+                    "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
+                    "outline": "none",
+                    "background-size": "100% 100%",
+                    // background-repeat : 배경 이미지 반복 지정
+                    // "background-repeat": "no-repeat",
+                    "background-position": "center"
+
+                });
+            } else {
+                alert('이미지가 아닙니다.');
+                return;
+
+
+            }
+        }
+</script>
+        {% block navigator %}
+
+        {% endblock %}
+</body >
 ​
-    {% block navigator %}
-​
-    {% endblock %}
-</body>
-​
-</html>
+</html >
