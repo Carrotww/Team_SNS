@@ -50,7 +50,7 @@
 </head>
 <body>
   {% comment %} 
-  write_no = models.AutoField(primary_key=True) # wirte number -> 기본키
+    write_no = models.AutoField(primary_key=True) # wirte number -> 기본키
     nickname = models.ForeignKey(UserModel, on_delete=models.CASCADE) # 외래키
     title = models.CharField(max_length=64, blank = False)
     content = models.CharField(max_length=256,blank = False)
@@ -70,15 +70,21 @@
               <img class="profile_img" src="https://t1.daumcdn.net/cafeattach/aVeZ/96bb985f315f63a2fe16120d8b0fec4b589ac4e9">
             </div>
             <!-- 작성자 아이디 데이터에서 가져와야함-->
-            <span class="author"> suzy022 </span> {% comment %}{{ tw.nickname }}{% endcomment %}
+            <span class="author"> {{ tw.nickname }} </span> {% comment %}{{ tw.nickname }}{% endcomment %}
             <!-- 게시글 작성자 닉네임, 작성 시간 데이터에서 가져와야함 -->
-            <span style="font-size: small;">전</span>{% comment %}{{ tw.author.username }}-{{tw.created_at|timesince}}{%endcomment %}
+            <span style="font-size: small;">{{ user.nickname }}{{tw.created_at|timesince}} ago</span>
             <!-- 작성자가 유저인 경우만 삭제 버튼 출력 -->
-            {% if tweet.nickname == username %}
-            <a href="/main/user_profile_delete/{{ tweet.write_no }}"
-            style="width: auto; height: 30px; margin-left: auto; margin-right: 20px;">
+            {% if tw.nickname == user %}
+            <a href="/main/user_profile_edit/{{ tw.write_no }}"
+            style="width: auto; height: 30px; margin-left: auto; margin-right: 0px;">
+              <button type="button" class="btn btn-outline-secondary"
+              style="width: auto; height: 32px; diplay: flex; align-items:center;">수정</button>
+            </a>
+  
+            <a href="/main/user_profile_delete/{{ tw.write_no }}"
+            style="width: auto; height: 30px; margin-left: 13px; margin-right: 3px;">
               <button type="button" class="btn btn-outline-secondary" onclick="delete_feed()"
-              style="width: auto; height: 30px;">삭제</button>
+              style="width: auto; height: 32px; diplay: flex; align-items:center;">삭제</button>
             </a>
             {% endif %}
           </div>
@@ -91,7 +97,7 @@
           </div>
           <div class="feed_content">
             <!-- 아래 게시글도 게시물 작성 페이지에서 작성 후 db에서 가져와야함 -->
-            <p style="font-size: 14px;">프론트 너무 어렵다 ㄹㅇ</p>{% comment %}{{ tw.content }}{% endcomment %}
+            <p style="font-size: 14px;">{{ tw.content }}</p>
           </div>
           <form action="" method="post" style="margin-top: 20px;">
             {% csrf_token %}

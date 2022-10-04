@@ -14,6 +14,8 @@ urlpatterns = [
    path('main/',views.main, name='main'), #메인 페이지 접속
    path('main/user_profile',views.user_profile, name='user_profile'),
    path('main/user_profile_delete/<int:write_no>', views.user_profile_delete, name='user_profile_delete'),
+   path('main/user_profile_edit/<int:write_no>', views.user_profile_edit, name='user_profile_edit'),
+
    # main page -> edit user profile
 
    path('main/<str:username>', views.user_profile, name='user_profile'),
