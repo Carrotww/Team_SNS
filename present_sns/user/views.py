@@ -16,26 +16,33 @@ from django.contrib.auth.views import LoginView, LogoutView, logout_then_login
 @csrf_exempt
 def login(request):
     if request.method == 'POST':
-        print('리퀘스트 로그 '+ str(request.body))
-        username =request.POST.get('username',None)
-        password =request.POST.get('userpw',None)
-        print ("name =" +username +"PW="+password)
+        username =request.POST.get('username', None)
+        password =request.POST.get('userpw', None)
 
         user = authenticate(request, username=username, password=password)
         if not user:
-            return render(request,'user/login.html', {'error':'이름 혹은 패스워드를 확인 해 주세요'}) 
-        django_login(request, user) 
-        return redirect('/main_user')
+            return render(request, 'user/login.html', {'error':'이름 혹은 패스워드를 확인 해 주세요'}) 
+        else:
+            auth.login(request, user)
+            return redirect('/main')
 
     elif request.method == 'GET':
-        return render(request, 'user/login.html')
+        user = request.user.is_authenticated
+        if user:
+            return redirect('/main')
+        else:
+            return render(request, 'user/login.html')
 
 
 
 @csrf_exempt
 def signup(request):
     if request.method == 'GET':
-        return render(request, 'user/signup.html')
+        user = request.user.is_authenticated
+        if user:
+            return redirect('/main')
+        else:
+            return render(request, 'user/signup.html')
     elif request.method == "POST":
         username = request.POST.get('username','')
         userpw = request.POST.get('userpw','')
@@ -48,12 +55,13 @@ def signup(request):
 
 
         if userpw != userpw2:
-            return render(request, 'user/signup.html',{})
+            return render(request, 'user/signup.html',{'error':'패스워드를 확인해주세요!'})
         else:
-            exist_user = UserModel.objects.filter(username=username)
-            
+            if username == '' or userpw == '':
+                return render(request, 'user/signup.html',{'error':'사용자 이름과 비밀번호는 필수입니다!'})
+            exist_user = get_user_model().objects.filter(username=username)
             if exist_user:
-                return render(request, 'user/signup.html')  #사용자가 이미 존재하는 경우 회원가입 다시
+                return render(request, 'user/signup.html',{'error':'사용자가 이미 존재합니다!'})
             else:
                 user_table = UserModel()
                 user_table.username=username
@@ -65,11 +73,18 @@ def signup(request):
                 user_table.bio=bio
                 user_table.save()
         
-                return redirect('/login', {'error':'이름 혹은 패스워드를 확인 해 주세요'})
+                return redirect('/login')
+
+@login_required
+def logout(request):
+    auth.logout(request)
+    return redirect('/login')
+
 
 @csrf_exempt
 def my_profile(request):
     return render(request, 'user/my_profile.html')
+
 @csrf_exempt
 def read(request):
     return render(request, 'tweet/read.html')

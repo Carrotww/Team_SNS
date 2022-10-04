@@ -27,18 +27,16 @@
                 <input type="text" placeholder="자기 소개" class="inlineToBlock" id="bio" name="bio">
             <button class="inlineToBlock ordinaryLogin unactivatedLoginColor">회원가입</button>
     </form>
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
         <div class="horizonAndOrWrap">
             <hr class="leftHr">
             <div class="or">또는</div>
             <hr class="rightHr">
         </div>
-
-        <a href="#" class="noneunderline">
-            <button class="inlineToBlock facebookLogin">
-                <i class="fa-brands fa-facebook" style="font-size:25px;"></i>
-                Facebook으로 로그인
-            </button>
-        </a>
         <div class="haveAccount">
             <p>
               <a href="/login" class="noneunderline">로그인 하러가기</a>
