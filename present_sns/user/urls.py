@@ -8,8 +8,10 @@ urlpatterns = [
     path('signup/', views.signup), #signup 페이지 접속
     path('my_profile/', views.my_profile), #마이 프로필 접속
     path('read/', views.read), # 게시글 상세페이지 접속
-    path('profileupdate/',views.profileupdate ,name='profileupdate'),
+    # path('profileupdate/',views.profileupdate ,name='profileupdate'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'), # 코드 추가하기
     path('login/',views.login, name='login'), #login 페이지 접속
     path('my_profile/', views.my_profile ,name='my_profile'),
+
+
 ]

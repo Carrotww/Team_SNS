@@ -18,7 +18,8 @@ class TweetModel(models.Model):
     tags = TaggableManager(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    tweet_img = models.ImageField(upload_to='tweet', null=True, blank=True, default=None)
+    tweet_img = models.ImageField(upload_to='tweet', null=True, blank=True, default=None) #업로드 이미지
+    profile_img = models.TextField()
 
 class Comment(models.Model):
     class Meta:

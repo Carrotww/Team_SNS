@@ -83,7 +83,7 @@
 <body>
     
     <!-- Created Nav  -->
-    <form 
+  
     <nav class="nav">
         <!-- Created a container  -->
         <div class="wrapper">
@@ -238,7 +238,7 @@
                 </div>
                 <div style="border-left: solid 1px gray; margin-top: 20px;">
                     <div>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="9"
+                        <textarea id="feed_content"class="form-control" id="exampleFormControlTextarea1" rows="9"
 
                             style="width: 274px; height: 400px;">내용을 적어주세요</textarea>
                     </div>
@@ -248,7 +248,7 @@
 
                     </div>
                     <div>
-                        <i type="button" class="fa-solid fa-forward fa-1x" style="padding: 0 100px;">공유하기</i>
+                        <i id="feed_create_button" type="button" class="fa-solid fa-forward fa-1x" style="padding: 0 100px;">공유하기</i>
 
                     </div>
 
@@ -261,6 +261,8 @@
 
     <!-- 제이쿼리 링크 연결 -->
     <script>
+        // files를 밖으로 꺼내서 어느 함수에도 적용할 수 있게 함
+        let files;
         // $('#id(선택자)or .class명')
         // nav_bar버튼을 누루면 modal_overlay css의 기능을 flex로 바꿔줄꺼다
         $('#nav_bar_add_box').click(function () {
@@ -274,6 +276,43 @@
             })
 
         });
+        $('#feed_create_button').click(function () {
+            // 공유하기버튼을 눌렀다IMG_3222.JPG
+            alert("공유하기버튼을 눌렀다" + files[0].name)
+
+            // let으로 해야 들어오는 값을 변경이 가능하다
+            let files = files; 
+            let image = files[0].name;
+            let content = $('#feed_content').val(); 
+            let user_id = "ksykma"; 
+            let profile_image = "https://t1.daumcdn.net/cafeattach/aVeZ/96bb985f315f63a2fe16120d8b0fec4b589ac4e9";
+
+            // FormData라는걸 만듦
+            let fd = new FormData();
+
+            fd.append('file', file);
+            fd.append('image', image);
+            fd.append('content', content);
+            fd.append('user_id', user_id);
+            fd.append('profile_image', profile_image);
+
+
+            $.ajax({
+                url: "/tweet/upload",
+                data: fd,
+                method: "POST",
+                success: function(data){  // 콜백 함수들(success, error, compile)
+                    console.log("성공");
+                },
+                error: function(request, status, error){
+                    console.log("에러");
+                },
+                compile: function(){
+                    console.log("완료");
+                }
+                })
+        });
+
         $('.img_upload_space')
             // dragover 마우스를 올리면 dragover 함수가 실행
             .on("dragover", dragOver)
@@ -314,7 +353,7 @@
             // dragOver(e); //1
             // 내가 올린 파일을 업로드 하는 부분
             e.dataTransfer = e.originalEvent.dataTransfer; //2
-            var files = e.target.files || e.dataTransfer.files;
+             files = e.target.files || e.dataTransfer.files;
 
             if (files.length > 1) {
                 alert('하나만 올려라.');

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% comment %} 마이프로필 페이지 {% endcomment %}
+<!-- Beomki 회원정보 링크추가 -->
 {% include 'temp_test/nav.html' %}
 {% load static %}
 <html>
@@ -55,10 +56,10 @@
             <hr>
             <div class="intro">
               {% if user.is_authenticated %}
-                  <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> 닉네임:<br>{{user.nickname}}</p>
+                  <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> 닉네임:<br>{{user.user}}</p>
                   <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> e-mail:<br>{{user.email}}</p>
                   <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> 자기소개:<br>{{user.bio}}</p>
-                  <a href="{% url 'user:profileupdate' %}"><class="w3-bar-item w3-button w3-padding-large">정보 수정하기</a>
+                  <a href="{% url 'profileupdate' %}"><class="w3-bar-item w3-button w3-padding-large">정보 수정하기</a>
                   <p> Follow 000 </p>
                   <p>Follower 000 </p>
                   {% endif %}

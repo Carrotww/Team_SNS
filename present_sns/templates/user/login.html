@@ -29,19 +29,14 @@
         <div class="contentsWrap">
             <div class="loginWindow">
                 <i style="font-size:100px;  " class="fa-brands fa-instagram"></i>
-                <input type="text" placeholder="username" class="inlineToBlock" id="username" name="username">
+                <input type="text" placeholder="userz" class="inlineToBlock" id="username" name="username">
                 <input type="password" placeholder="password" class="inlineToBlock" id="userpw" name="userpw">
             <button class="inlineToBlock ordinaryLogin unactivatedLoginColor" type="submit">로그인</button>
         {% if error %}
             <div class='alert alert-danger' role='alert'>
                 {{ error }}
             </div>
-        {% endif %}          
-        <div class="horizonAndOrWrap">
-            <hr class="leftHr">
-            <div class="or">또는</div>
-            <hr class="rightHr">
-        </div>
+        {% endif %}
     </form> 
     </div>
     <div class="haveAccount">
