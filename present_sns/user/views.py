@@ -10,6 +10,7 @@ from django.views.decorators.csrf import csrf_exempt
 # csrf_exempt 는 보안관련
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
+from django.contrib.auth.views import LoginView, LogoutView, logout_then_login
 
 # Create your views here.
 def testpage(request):
@@ -42,7 +43,7 @@ def login(request):
         if not user:
             return render(request,'user/login.html') 
         django_login(request, user) 
-        return redirect('/main')
+        return redirect('/main_user')
 
     elif request.method == 'GET':
         return render(request, 'user/login.html')
@@ -61,7 +62,9 @@ def signup(request):
         userimg = request.POST.get('userimg','')
         useremail = request.POST.get('useremail','')
         phone = request.POST.get('phone','')
+        bio = request.POST.get('bio','')
 
+        
         if userpw !=userpw2:
             return render(request, 'user/signup.html',{})
         else:
@@ -72,23 +75,16 @@ def signup(request):
             user_table.user_img=userimg
             user_table.email=useremail
             user_table.phone=phone
+            user_table.bio=bio
             user_table.save()
         
         return redirect('/login')
 
-
-@login_required()
-def logout(request):
-    auth.logout(request)
-    return  redirect('/')
-
+@csrf_exempt
+def main_user(request):
+    return render(request, 'user/main_page.html')
 
 @csrf_exempt
-def main_page(request):
-    return render(request, 'user/main_page.html') 
+def profileupdate(request):
+    return render(request, 'user/profileupdate.html')
 
-def my_profile(request):
-    return render(request, 'user/my_profile.html')
-
-def read(request):
-    return render(request, 'tweet/read.html')
