@@ -1,5 +1,9 @@
 
+from pyclbr import readmodule
 from django.shortcuts import render, redirect
+from django.views.generic import ListView, TemplateView
+
+from user.views import read
 from .models import UserModel
 from .models import TweetModel
 from .models import Comment
@@ -35,20 +39,6 @@ def main(request):
         my_tweet.tweet_img = request.POST.get('tweet_img','') # 트윗에 길
         my_tweet.save()
         return redirect('/main')
-
-"""
-    write_no = models.AutoField(primary_key=True) # wirte number -> 기본키
-    nickname = models.ForeignKey(UserModel, on_delete=models.CASCADE) # 외래키
-    title = models.CharField(max_length=64, blank = False)
-    content = models.CharField(max_length=256,blank = False)
-    modify_dt = models.DateTimeField('MODIFY DATE', auto_now=True)
-    tags = TaggableManager(blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    tweet_img = models.ImageField(upload_to='tweet', null=True, blank=True, default=None) #업로드 이미지
-    profile_img = models.TextField()
-"""
-
 
 def user_profile(request):
     if request.method == 'GET':
@@ -87,8 +77,43 @@ def user_profile_edit(request, write_no):
 
     return redirect('/main')
 
-def defualt_comment(request):
-    pass
+@login_required
+def write_comment(request, id): # id값은 write_no의 id값
+    if request.method == "POST":
+        comment = request.POST.get('comment',"")
+        current_tweet_id = TweetModel.objects.get(id=id) # 작성 post의 id
+
+        WC = Comment()
+        WC.write_no = current_tweet_id
+        WC.comment = comment
+        WC.nickname = request.username
+        WC.save()
+
+        return redirect(f'/main/{str(current_tweet_id)}/read/')
+
+
+@login_required
+def delete_comment(request, id): # comment primary key 인 id 값을 인자로 가져와서 비교하여 삭제함
+    comment = Comment.objects.get(id=id) # comment의 id
+    current_tweet_id = comment.tweet_table.write_no # 작성중인 post 게시물의 id
+    comment.delete()
+
+    return redirect(f'/main/{str(current_tweet_id)}/read/')
+
+class TagCloudTV(TemplateView):
+    template_name = 'taggit/tag_cloud_view.html'
+
+class TaggedObjectLV(ListView):
+    template_name = 'taggit/tag_with_post.html'
+    model = TweetModel
+    
+    def get_queryset(self):
+        return TweetModel.objects.filter(tags__name=self.kwargs.get('tag'))
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tagname'] = self.kwargs['tag']
+        return context
 
 def profileupdate(request):
     if request.method == "POST":

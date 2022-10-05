@@ -120,16 +120,21 @@
             </div>
           </form>
           <!-- 태그 조건문(게시물 작성 페이지에서 입력한 태그 db에서 가져와야함) -->
-          {% comment %}{% if tw.tags.all %}{% endcomment %}
-          <!-- 태그 반복문 -->
-          {% comment %}{% for tag in tw.tags.all %}{% endcomment %}
-          <div class="tags">
-            <div class="card-body">
-              <!-- 태그 선택 시 해당 태그가 있는 모든 게시물 보여주기(페이지나 모달 창 만들어야 할 것 같음) -->
-              {% comment %}<a href="{% url 'tagged_object_list' tag.name %}" style="color:black;">{% endcomment %}
-                <!-- 게시물 작성 페이지에서 입력한 태그 데이터를 가져와야함 -->
-                <a href="#" class="card-link" style="color:black;">#프론트{% comment %}{{ tag.name }}{% endcomment %}</a>
-                <a href="#" class="card-link">#백엔드{% comment %}{{ tag.name }}{% endcomment %}</a>
+          {% if tw.tags.all %}
+            {% for tag in tw.tags.all %}
+              <div class="tags">
+                <div class="card-body">
+                  <!-- 태그 선택 시 해당 태그가 있는 모든 게시물 보여주기(페이지나 모달 창 만들어야 할 것 같음) -->
+                    <a href="{% url 'tagged_object_list' tag.name %}" style="color:black;">
+                    <!-- 게시물 작성 페이지에서 입력한 태그 데이터를 가져와야함 -->
+                  <span class="card-link" style="color:black;">
+                    {{ tag.name }}
+                  </span>
+                </a>
+            {% endfor %}
+            <a style="text-decoration: none"
+              href="{% url 'tag_cloud' %}"></a>
+          {% endif %}
             </div>
           </div>
           <!-- 태그 반복문, 조건문 종료 -->
