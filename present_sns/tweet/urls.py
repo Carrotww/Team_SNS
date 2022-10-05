@@ -15,9 +15,12 @@ urlpatterns = [
    path('main/user_profile',views.user_profile, name='user_profile'),
    path('main/user_profile_delete/<int:write_no>', views.user_profile_delete, name='user_profile_delete'),
    path('main/user_profile_edit/<int:write_no>', views.user_profile_edit, name='user_profile_edit'),
+   path('main/<int:write_no>/read', views.write_comment, name='write_comment'),
+   path('main/<int:write_no>/read/delete', views.delete_comment, name='delet_comment'),
+   path('tag/', views.TagCloudTV.as_view(), name='tag_cloud'),
+   path('tag/<str:tag>/', views.TaggedObjectLV.as_view(), name='tagged_object_list'),
 
    # main page -> edit user profile
-
    path('main/<str:username>', views.user_profile, name='user_profile'),
 #    path('main/user_profile')
    path('profileupdate/',views.profileupdate ,name='profileupdate'),
