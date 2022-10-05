@@ -98,9 +98,9 @@
                   <img class="profile_img"
                     src="https://t1.daumcdn.net/cafeattach/aVeZ/96bb985f315f63a2fe16120d8b0fec4b589ac4e9">
                 </div>
-                {% if tw.nickname == user %}
-                  <span class="author"> {{ tw.nickname }} </span>
-                  <span style="font-size: small; text-align: right;">{{ user.nickname }}{{tw.created_at|timesince}} ago</span>
+                {% if tw.username == user %}
+                  <span class="author"> {{ tw.username }} </span>
+                  <span style="font-size: small; text-align: right;">{{tw.created_at|timesince}} ago</span>
 
                   <a href="/main/user_profile_edit/{{ tw.write_no }}"
                   style="width: auto; height: 30px; margin-left: auto; margin-right: 0px;">

@@ -11,7 +11,7 @@ class TweetModel(models.Model):
         db_table = "tweet_table"
 
     write_no = models.AutoField(primary_key=True) # wirte number -> 기본키
-    nickname = models.ForeignKey(UserModel, on_delete=models.CASCADE) # 외래키
+    username = models.ForeignKey(UserModel, on_delete=models.CASCADE) # 외래키
     title = models.CharField(max_length=64, blank = False)
     content = models.CharField(max_length=256,blank = False)
     modify_dt = models.DateTimeField('MODIFY DATE', auto_now=True)
@@ -26,7 +26,7 @@ class Comment(models.Model):
     class Meta:
         db_table = "comment_table"
     write_no = models.ForeignKey(TweetModel, on_delete=models.CASCADE) # tweet 에서 가져온 외래키
-    nickname = models.ForeignKey(UserModel, on_delete=models.CASCADE) # user_table 에서 가져온 user nickname 외래키
+    username = models.ForeignKey(UserModel, on_delete=models.CASCADE) # user_table 에서 가져온 user username 외래키
     comment = models.CharField(max_length=100, null=False) # comment, 빈 값은 허용 X
     comment_write = models.DateTimeField(auto_now_add=True) # 작성 시간
     comment_update = models.DateTimeField(auto_now=True) # 수정 시간

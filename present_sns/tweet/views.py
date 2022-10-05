@@ -37,7 +37,7 @@ def main(request):
     elif request.method == 'POST':  # main_profile 에서 dict 형태로 가져옴
         username = request.user.username  # 현재 로그인 한 사용자를 불러오기
         my_tweet = TweetModel()  # 글쓰기 모델 가져오기
-        my_tweet.nickname = request.POST.get('')
+        my_tweet.username = request.POST.get('')
         my_tweet.content = request.POST.get('my-content', '')  # 모델에 글 저장
         my_tweet.tweet_img = request.POST.get('tweet_img','') # 트윗에 길
         my_tweet.save()
@@ -71,14 +71,14 @@ class UploadTweet(APIView):
         
         tweet_img = uuid_name #업로드 이미지
         content = request.data.get('content')
-        nickname = request.user
+        username = request.user
         # user_img = request.data.get('user_img')
         tags = request.data.get('tags')
         write_no = request.data.get('write_no')
        
         TweetModel.objects.create(tweet_img=tweet_img, 
                                   content=content, 
-                                  nickname=nickname, 
+                                  username=username, 
                                 #   user_img=user_img,
                                 #   like_count=0, 
                                   tags=tags,
@@ -89,7 +89,7 @@ class UploadTweet(APIView):
 
 @login_required
 def user_profile_delete(request, write_no):
-    # current_user_tweet = TweetModel.objects.filter(nickname=nickname)
+    # current_user_tweet = TweetModel.objects.filter(username=username)
     current_user_tweet = TweetModel.objects.get(write_no=write_no)
     # for i in current_user_tweet:
     #     if i['write_no'] == write_no:
@@ -115,7 +115,7 @@ def write_comment(request, id): # id값은 write_no의 id값
         WC = Comment()
         WC.write_no = current_tweet_id
         WC.comment = comment
-        WC.nickname = request.username
+        WC.username = request.username
         WC.save()
 
         return redirect(f'/main/{str(current_tweet_id)}/read/')
