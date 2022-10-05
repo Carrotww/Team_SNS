@@ -1,8 +1,6 @@
 from pyclbr import readmodule
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, TemplateView
-
-from user.views import read
 from .models import UserModel
 from .models import TweetModel
 from .models import Comment
@@ -13,6 +11,8 @@ import os
 from present_sns.settings import MEDIA_ROOT
 # from models import UserModel
 from django.contrib.auth.decorators import login_required # need login module
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib import messages
 
 
 # Create your views here.
@@ -30,6 +30,20 @@ def main(request):
         user = request.user.is_authenticated  # 사용자가 로그인이 되어 있는지 확인하기
         if user:  # 로그인 한 사용자라면
             all_tweet = TweetModel.objects.all().order_by('-created_at')
+            all_comment = Comment.objects.all().order_by('comment_write')
+            temp_comment = []
+            for i in all_tweet:
+                pass
+            if all_comment:
+                if len(all_comment) >= 2:
+                    for i in range(2):
+                        temp_comment.append(all_comment[i])
+                else:
+                    for i in all_comment:
+                        temp_comment.append(i)
+                return render(request, 'user/main_page.html', {'tweet': all_tweet}) 
+                #{'comment': temp_comment})
+            
             return render(request, 'user/main_page.html', {'tweet': all_tweet})
         else:  # 로그인이 되어 있지 않다면
             return redirect('/signin')
@@ -106,19 +120,51 @@ def user_profile_edit(request, write_no):
 
     return redirect('/main')
 
+def read_tweet(request, write_no):
+    if request.method == 'GET':
+        click_tweet = TweetModel.objects.get(write_no=write_no)
+        comments = click_tweet.comment_set.all()
+            
+        return render(request, 'tweet/read.html', {'tweet': click_tweet, 'comments': comments})
+        # return render(request, 'tweet/read.html', {'tweet': click_tweet})
+
 @login_required
-def write_comment(request, id): # id값은 write_no의 id값
+@csrf_exempt
+def comment_write(request, id):
+    if request.method == 'POST':
+        username = request.user.username
+        comment = request.POST.get('my-comment',"")
+        if comment == '':
+            messages.warning(request, '댓글을 확인해 주세요')
+            return redirect('/main/read/'+str(id))
+            # return redirect('/main/read/'+str(id), {'error': '댓글을 입력해 주세요!'})
+        
+        WC = Comment()
+        WC.write_no_id = id
+        WC.comment = comment
+        WC.username_id = username
+        WC.save()
+        return redirect('/main/read/'+str(id))
+
+@login_required
+def comment_delete(request, id):
+    pass
+
+@login_required
+def write_main_comment(request, id, username): # id값은 write_no의 id값
     if request.method == "POST":
-        comment = request.POST.get('comment',"")
-        current_tweet_id = TweetModel.objects.get(id=id) # 작성 post의 id
+        comment = request.POST.get('my-comment',"")
+        current_tweet_id = TweetModel.objects.get(write_no=id) # 작성 post의 id
+        write_username = UserModel.objects.get(username=username)
 
         WC = Comment()
         WC.write_no = current_tweet_id
         WC.comment = comment
-        WC.username = request.username
+        WC.username = write_username
         WC.save()
 
-        return redirect(f'/main/{str(current_tweet_id)}/read/')
+        return redirect('/main/' + str(id))
+        # return redirect(f'/main/{str(c)urrent_tweet_id}/read/')
 
 
 @login_required
@@ -130,10 +176,10 @@ def delete_comment(request, id): # comment primary key 인 id 값을 인자로 �
     return redirect(f'/main/{str(current_tweet_id)}/read/')
 
 class TagCloudTV(TemplateView):
-    template_name = 'taggit/tag_cloud_view.html'
+    template_name = 'taggit/tag_cloud_view.html' # tag_cloud_view.html 아직 없음!
 
 class TaggedObjectLV(ListView):
-    template_name = 'taggit/tag_with_post.html'
+    template_name = 'taggit/tag_with_post.html' # tag_with_post.html 아직 없음!
     model = TweetModel
     
     def get_queryset(self):

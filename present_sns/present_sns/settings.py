@@ -132,3 +132,4 @@ AUTH_USER_MODEL = 'user.UserModel'
 
 LOGOUT_REDIRECT_URL = '/'
 
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'

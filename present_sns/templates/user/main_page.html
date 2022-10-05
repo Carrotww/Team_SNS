@@ -79,7 +79,7 @@
           </div>
           <div class="feed">
             <!-- 게시물 사진 클릭 시 게시물 상세페이지로 이동 -->
-            <a href="/read/"> 
+            <a href="/main/read/{{ tw.write_no }}"> 
               <!-- 아래 사진을 가져오는 태그는 게시물 작성 페이지에서 작성 후 db에서 가져와야함 -->
               <img class="feed_img" src="/media/{{ tw.tweet_img }}">
             </a>
@@ -88,7 +88,7 @@
             <!-- 아래 게시글도 게시물 작성 페이지에서 작성 후 db에서 가져와야함 -->
             <p style="font-size: 14px;">{{ tw.content }}</p>
           </div>
-          <form action="" method="post" style="margin-top: 20px;">
+          <form action="method=/main/comment/{{ tw.write_no }}"post" style="margin-top: 20px;">
             {% csrf_token %}
             <div class="comment_box">
               <div class="like_icon">
@@ -102,8 +102,8 @@
                 </div>
               </div>
               <div class="comment">
-                <input type="text" class="form-control" placeholder="댓글" aria-label="First name" name="my-comment"
-                  id="my-comment" style="width: 400px;">
+                <input type="text" class="form-control" placeholder="댓글" aria-label="First name" 
+                name="my-comment" id="my-comment" style="width: 400px;">
               </div>
               <button onclick="Comment()" type="submit" class="btn btn-dark" style="width: 70px;">게시</button>
             </div>
@@ -114,8 +114,7 @@
               <div class="tags">
                 <div class="card-body">
                   <!-- 태그 선택 시 해당 태그가 있는 모든 게시물 보여주기(페이지나 모달 창 만들어야 할 것 같음) -->
-                    <a href="{% url 'tagged_object_list' tag.name %}" style="color:black;">
-                    <!-- 게시물 작성 페이지에서 입력한 태그 데이터를 가져와야함 -->
+                <a href="{% url 'tagged_object_list' tag.name %}" style="color:black;">
                   <span class="card-link" style="color:black;">
                     {{ tag.name }}
                   </span>
@@ -124,9 +123,13 @@
             <a style="text-decoration: none"
               href="{% url 'tag_cloud' %}"></a>
           {% endif %}
+              </div>
             </div>
-          </div>
-          <!-- 태그 반복문, 조건문 종료 -->
+            {% if comment %}
+              {% for cm in comment %}
+            <div class="comment_box" style="background-color:light-blue;">댓글이 보이는 박스입니다.</div>
+              {% endfor %}
+            {% endif %}
         </div>
       </div>
     {% endfor %}

@@ -51,20 +51,20 @@
             <div class="profile_box">
               <div class="profile_img_box">
                 <img class="profile_img"
-                  src="https://t1.daumcdn.net/cafeattach/aVeZ/96bb985f315f63a2fe16120d8b0fec4b589ac4e9">
+                  src="/media/{{ tweet.profile_img }}">
               </div>
-              <span class="author"> suzy022 </span>
-                <span style="font-size: small; text-align: right;">{{ tw.author.username }}-{{ tw.created_at|timesince }} 전</span>
+              <span class="author"> {{ tweet.username }} </span>
+                <span style="font-size: small; text-align: right;">{{ tweet.created_at|timesince }} </span>
             </div>
             <div class="feed">
               <a href="#">
-                <img class="feed_img" src="https://i.postimg.cc/kGw4SRKS/gyuhyeon.jpg">
+                <img class="feed_img" src="/media/{{ tweet.tweet_img }}">
               </a>
             </div>
             <div class="feed_content">
-              <p class="feed_txt">프론트 너무 어렵다 ㄹㅇ</p>
+              <p class="feed_txt">{{ tweet.content }}</p>
             </div>
-            <form action="" method="post">
+            <form action="/main/comment/{{ tweet.write_no }}" method="post">
                 {% csrf_token %}
                 <div class="container" style="background-color: white;">
                   <div class="item">
@@ -79,26 +79,36 @@
                     </div>
                   </div>
                   </div>
+                  {% if error %}
+                    <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                    </div>
+                  {% endif %}
                   <div class="item" style="margin: 0 15px 0 15px;">
                   <input type="text" class="form-control" placeholder="댓글" aria-label="First name" name="my-comment"
                     id="my-comment" style="width: 340px; margin:auto;">
                   </div>
                   <div class="item">
-                  <button onclick="Comment()" type="submit" class="btn btn-dark">게시</button>
+                  <button onclick="Comment()" href="/main/read/{{ tweet.write_no }}" type="submit" class="btn btn-dark">게시</button>
                   </div>
                 </div>
               </form>
-            {% comment %}{% for tag in tw.tags.all %}{% endcomment %}
-            {% comment %}{% if tw.tags.all %}{% endcomment %}
-            <div class="tags">
-              <div class="card-body">
-                <a href="#" class="card-link" style="color:black;">#프론트</a>
-                <a href="#" class="card-link">#백엔드</a>
+              {% if tweet.tags.all %}
+              {% for tag in tweet.tags.all %}
+                <div class="tags">
+                  <div class="card-body">
+                    <!-- 태그 선택 시 해당 태그가 있는 모든 게시물 보여주기(페이지나 모달 창 만들어야 할 것 같음) -->
+                  <a href="{% url 'tagged_object_list' tag.name %}" style="color:black;">
+                    <span class="card-link" style="color:black;">
+                      {{ tag.name }}
+                    </span>
+                  </a>
+                </div>
               </div>
-            </div>
-            {% comment %}{% endfor %}{% endcomment %}
-            {% comment %}{% endif %}{% endcomment %}
-            {% comment %}{% endfor %}{% endcomment %}
+              {% endfor %}
+              <a style="text-decoration: none"
+                href="{% url 'tag_cloud' %}"></a>
+            {% endif %}
           </div>
       </div>
     </div>
@@ -108,12 +118,15 @@
           <span class="author"> 댓글 </span>
         </div>
         <ol class="list-group list-group-flush" sytle="margin-top: 10px;">
-          <li class="list-group-item">안녕하세요</li>
-          <li class="list-group-item">반갑습니다</li>
-          <li class="list-group-item">우아아앙</li>
-          <li class="list-group-item">신기방기</li>
-          <li class="list-group-item">빨리끝나라</li>
-          <li class="list-group-item">빨리끝나라</li>
+          {% if comments %}
+          {% for cm in comments %}
+            <li class="list-group-item">{{ cm.comment }}</li>
+            <li class="list-group-item">-작성자 {{ cm.username }}</li>
+          {% endfor %}
+          {% endif %}
+          {% if not comments %}
+          <h1>댓글을 먼저 작성해 보세요!</h1>
+          {% endif %}
         </ol>
       </div>
     </div>

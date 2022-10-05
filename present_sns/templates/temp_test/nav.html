@@ -279,18 +279,18 @@
          
         $('#feed_create_button').click(function (){
             // 공유하기버튼을 눌렀다IMG_3222.JPG
-            alert("공유하기버튼을 눌렀다");
-
+            alert("공유 완료!")
             // let으로 해야 들어오는 값을 변경이 가능하다
             // 파일을 1개만 올리니까 [0]번째로 지정함
             let file = files[0]; 
             let tweet_img = files[0].name;
             let content = $('#input_feed_content').val();
-            let username = 'yoonsun'
+            let username = '{{ user }}'
             let user_img = "https://t1.daumcdn.net/cafeattach/aVeZ/96bb985f315f63a2fe16120d8b0fec4b589ac4e9";
 
             // FormData라는걸 만듦
             let fd = new FormData();
+            console.log(fd)
 
             fd.append('file', file);
             fd.append('tweet_img', tweet_img);
@@ -383,13 +383,10 @@
                     "background-repeat": "no-repeat",
 
                     "background-position": "center"
-
                 });
             } else {
                 alert('이미지가 아닙니다.');
                 return;
-
-
             }
         }
 
