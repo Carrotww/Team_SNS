@@ -25,21 +25,22 @@
       alert('댓글 작성 완료!');
     }
     var state = ["block", "none"];
-    var i=0;
-    var j=1; 
-    function change(){
-      if(i>=state.length){
-        i=0;
+    var i = 0;
+    var j = 1;
+    function change(k) {
+      if (i >= state.length) {
+        i = 0;
       }
-      var b = document.getElementsByClassName("good")[0];
-      b.style.display=state[i];
-        i++;
-      var d = document.getElementsByClassName("bad")[0];
-      d.style.display=state[j];
+      var b = document.getElementById("good"+k);
+      b.style.display = state[i];
+      
+      i++;
+      var d = document.getElementById("bad"+k);
+      d.style.display = state[j];
       j--
-      if(j<0){
-        j=1;
-      }  
+      if (j < 0) {
+        j = 1;
+      }
     }
   </script>  
 </head>
@@ -88,54 +89,70 @@
         </div>
         <br>
       </div>
+      {% for tw in tweet %}
       <div class="col-sm">
         <div class="main_feed" style="margin-left:20px; margin-top:5px;" >
-          {% comment %}{% for fd in feed %}{% endcomment %}
             <div class="feed_box">
               <div class="profile_box">
                 <div class="profile_img_box">
                   <img class="profile_img"
                     src="https://t1.daumcdn.net/cafeattach/aVeZ/96bb985f315f63a2fe16120d8b0fec4b589ac4e9">
                 </div>
-                <span class="author"> suzy022 </span>
-                <span style="font-size: small; text-align: right;">{{ tw.author.username }}-{{ tw.created_at|timesince }} 전</span>
+                {% if tw.nickname == user %}
+                  <span class="author"> {{ tw.nickname }} </span>
+                  <span style="font-size: small; text-align: right;">{{ user.nickname }}{{tw.created_at|timesince}} ago</span>
+
+                  <a href="/main/user_profile_edit/{{ tw.write_no }}"
+                  style="width: auto; height: 30px; margin-left: auto; margin-right: 0px;">
+                  <button type="button" class="btn btn-outline-secondary"
+                  style="width: auto; height: 32px; diplay: flex; align-items:center;">수정</button>
+                  </a>
+  
+                  <a href="/main/user_profile_delete/{{ tw.write_no }}"
+                  style="width: auto; height: 30px; margin-left: 13px; margin-right: 3px;">
+                  <button type="button" class="btn btn-outline-secondary" onclick="delete_feed()"
+                  style="width: auto; height: 32px; diplay: flex; align-items:center;">삭제</button>
+                  </a>
+                {% endif %}
               </div>
               <div class="feed">
-                <a href="#">
-                  <img class="feed_img" src="https://i.postimg.cc/kGw4SRKS/gyuhyeon.jpg">
+                <a href="/read/">
+                  <img class="feed_img" src={{ tw.tweet_img }}.JPG>
                 </a>
               </div>
               <div class="feed_content">
-                <p class="feed_txt">프론트 너무 어렵다 ㄹㅇ</p>
+                <p class="feed_txt">{{ tw.content }}</p>
               </div>
-              {% comment %}{% for tag in tw.tags.all %}{% endcomment %}
-              {% comment %}{% if tw.tags.all %}{% endcomment %}
-              <div class="tags">
-                <div class="card-body">
-                  <a href="#" class="card-link" style="color:black;">#프론트</a>
-                  <a href="#" class="card-link">#백엔드</a>
-                </div>
+              {% if tw.tags.all %}
+                {% for tag in tw.tags.all %}
+                  <div class="tags">
+                    <div class="card-body">
+                      <a href="{% url 'tagged_object_list' tag.name %}" style="color:black;">
+                        <span class="card-link" style="color:black;">
+                          {{ tag.name }}
+                        </span>
+                      </a>  
+                {% endfor %}
+                <a style="text-decoration: none"
+                  href="{% url 'tag_cloud' %}"></a>
+              {% endif %}          
+                    </div>
+                  </div>  
               {% comment %}{% endfor %}{% endcomment %}
               {% comment %}{% endif %}{% endcomment %}
     
               {% comment %}{% endfor %}{% endcomment %}
-              </div>
+              
               <form action="" method="post"></form>
                 {% csrf_token %}
                 <div class="feed_icon">
                   <div class="like" style="margin-left: auto;">
-                    <button
-                      style="display: block"
-                      onclick="change();"
-                      class="bad"
-                    >
+                    <button style="display: block" onclick="change({{ tw.write_no }});" id="bad{{tw.write_no}}" class="bad" type="button">
                       <i class="fa-regular fa-heart" aria-hidden="true"></i>
                     </button>
-                    <button
-                      style="display: none"
-                      onclick="change();"
-                      class="good"
-                    >
+                    <button style="display: none" onclick="change({{ tw.write_no }});" id="good{{tw.write_no}}" class="good" type="button">
+                      <i class="fa-solid fa-heart" aria-hidden="true"></i>
+                    </button>
                       <i class="fa-solid fa-heart" aria-hidden="true"></i>
                     </button>
                   </div>
@@ -145,63 +162,7 @@
           </div> 
         </div>     
       </div>
-      <div class="col-sm">
-        <div class="main_feed" style="margin-left:20px; margin-top:5px;" >
-          {% comment %}{% for fd in feed %}{% endcomment %}
-            <div class="feed_box">
-              <div class="profile_box">
-                <div class="profile_img_box">
-                  <img class="profile_img"
-                    src="https://t1.daumcdn.net/cafeattach/aVeZ/96bb985f315f63a2fe16120d8b0fec4b589ac4e9">
-                </div>
-                <span class="author"> suzy022 </span>
-                <span style="font-size: small; text-align: right;">{{ tw.author.username }}-{{ tw.created_at|timesince }} 전</span>
-              </div>
-              <div class="feed">
-                <a href="#">
-                  <img class="feed_img" src="https://i.postimg.cc/kGw4SRKS/gyuhyeon.jpg">
-                </a>
-              </div>
-              <div class="feed_content">
-                <p class="feed_txt">프론트 너무 어렵다 ㄹㅇ</p>
-              </div>
-              {% comment %}{% for tag in tw.tags.all %}{% endcomment %}
-              {% comment %}{% if tw.tags.all %}{% endcomment %}
-              <div class="tags">
-                <div class="card-body">
-                  <a href="#" class="card-link" style="color:black;">#프론트</a>
-                  <a href="#" class="card-link">#백엔드</a>
-                </div>
-              {% comment %}{% endfor %}{% endcomment %}
-              {% comment %}{% endif %}{% endcomment %}
-    
-              {% comment %}{% endfor %}{% endcomment %}
-              </div>
-              <form action="" method="post"></form>
-                {% csrf_token %}
-                <div class="feed_icon">
-                  <div class="like" style="margin-left: auto;">
-                    <button
-                      style="display: block"
-                      onclick="change();"
-                      class="bad"
-                    >
-                      <i class="fa-regular fa-heart" aria-hidden="true"></i>
-                    </button>
-                    <button
-                      style="display: none"
-                      onclick="change();"
-                      class="good"
-                    >
-                      <i class="fa-solid fa-heart" aria-hidden="true"></i>
-                    </button>
-                  </div>
-                </div>
-              </form>  
-            </div>
-          </div> 
-        </div>     
-      </div> 
+      {% endfor %}
     </div>
   </div>
 </body>

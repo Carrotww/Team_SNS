@@ -1,5 +1,9 @@
 from django.urls import path
 from . import views # user app의 views를 import 해옴
+from tweet.views import UploadTweet
+from present_sns.settings import MEDIA_URL, MEDIA_ROOT
+from django.conf.urls.static import static
+
 
 # 1. main -> myprofile로 가는 경로
 # 2. 게시물 보이는거, 작성하는 경로 + tag
@@ -17,6 +21,8 @@ urlpatterns = [
    path('main/user_profile_edit/<int:write_no>', views.user_profile_edit, name='user_profile_edit'),
    path('main/<int:write_no>/read', views.write_comment, name='write_comment'),
    path('main/<int:write_no>/read/delete', views.delete_comment, name='delet_comment'),
+   path('main/tweet_post', UploadTweet.as_view(), name='tweet_post'),
+   # path('main/tweet_post', UploadTweet.as_view(), name='tweet_post'), #윤선 추가
    path('tag/', views.TagCloudTV.as_view(), name='tag_cloud'),
    path('tag/<str:tag>/', views.TaggedObjectLV.as_view(), name='tagged_object_list'),
 
@@ -26,3 +32,6 @@ urlpatterns = [
    path('profileupdate/',views.profileupdate ,name='profileupdate'),
 #    path('tweet/user_profile/<str:nickname>/')
 ]
+
+# 파일을 저장하는 미디어파일 확장하기 위해
+urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)
