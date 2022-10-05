@@ -1,13 +1,12 @@
 {% comment %} 네비 {% endcomment %}
 <!DOCTYPE html>
 
+
 <html lang="en">
 {% load static %}
 
 
 <head>
-
-
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -238,17 +237,18 @@
                 </div>
                 <div style="border-left: solid 1px gray; margin-top: 20px;">
                     <div>
-                        <textarea id="feed_content"class="form-control" id="exampleFormControlTextarea1" rows="9"
+                        <textarea id="input_feed_content"class="form-control" id="exampleFormControlTextarea1" rows="9"
 
-                            style="width: 274px; height: 400px;">내용을 적어주세요</textarea>
+                            style="width: 274px; height: 400px;" placeholder="내용을 적어주세요"></textarea>
                     </div>
                     <div>
                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="9"
-                            style="width: 274px; height: 100px;">tag</textarea>
+                            style="width: 274px; height: 100px;" placeholder="tag"></textarea>
 
                     </div>
-                    <div>
-                        <i id="feed_create_button" type="button" class="fa-solid fa-forward fa-1x" style="padding: 0 100px;">공유하기</i>
+                   
+                    <div>{% csrf_token %}
+                        <button id="feed_create_button" type="button" class="fa-solid fa-forward fa-1x" style="padding: 0 100px;">공유하기</i>
 
                     </div>
 
@@ -262,7 +262,7 @@
     <!-- 제이쿼리 링크 연결 -->
     <script>
         // files를 밖으로 꺼내서 어느 함수에도 적용할 수 있게 함
-        let files;
+        let files; 
         // $('#id(선택자)or .class명')
         // nav_bar버튼을 누루면 modal_overlay css의 기능을 flex로 바꿔줄꺼다
         $('#nav_bar_add_box').click(function () {
@@ -271,46 +271,52 @@
             });
             // // body의 스크롤 없애는법
 
-            $(document.body).scc({
-                overflow: 'hidden'
-            })
+            // $(document.body).css({
+            //     overflow: 'hidden'
+            // })
 
         });
-        $('#feed_create_button').click(function () {
+         
+        $('#feed_create_button').click(function (){
             // 공유하기버튼을 눌렀다IMG_3222.JPG
-            alert("공유하기버튼을 눌렀다" + files[0].name)
+            alert("공유하기버튼을 눌렀다");
 
             // let으로 해야 들어오는 값을 변경이 가능하다
-            let files = files; 
-            let image = files[0].name;
-            let content = $('#feed_content').val(); 
-            let user_id = "ksykma"; 
-            let profile_image = "https://t1.daumcdn.net/cafeattach/aVeZ/96bb985f315f63a2fe16120d8b0fec4b589ac4e9";
+            // 파일을 1개만 올리니까 [0]번째로 지정함
+            let file = files[0]; 
+            let tweet_img = files[0].name;
+            let content = $('#input_feed_content').val();
+            let nickname = 'yoonsun'
+            let user_img = "https://t1.daumcdn.net/cafeattach/aVeZ/96bb985f315f63a2fe16120d8b0fec4b589ac4e9";
 
             // FormData라는걸 만듦
             let fd = new FormData();
 
             fd.append('file', file);
-            fd.append('image', image);
+            fd.append('tweet_img', tweet_img);
             fd.append('content', content);
-            fd.append('user_id', user_id);
-            fd.append('profile_image', profile_image);
+            fd.append('nickname', nickname);
+            fd.append('user_img', user_img);
 
-
+            var $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
             $.ajax({
-                url: "/tweet/upload",
+                url: "/main/tweet_post", 
+                headers:{"X-CSRFToken": $crf_token},
                 data: fd,
                 method: "POST",
+                processData: false,
+                contentType: false,
+
                 success: function(data){  // 콜백 함수들(success, error, compile)
                     console.log("성공");
                 },
                 error: function(request, status, error){
                     console.log("에러");
                 },
-                compile: function(){
+                complete: function(){
                     console.log("완료");
                 }
-                })
+            })
         });
 
         $('.img_upload_space')
@@ -353,7 +359,7 @@
             // dragOver(e); //1
             // 내가 올린 파일을 업로드 하는 부분
             e.dataTransfer = e.originalEvent.dataTransfer; //2
-             files = e.target.files || e.dataTransfer.files;
+            files = e.target.files || e.dataTransfer.files;
 
             if (files.length > 1) {
                 alert('하나만 올려라.');

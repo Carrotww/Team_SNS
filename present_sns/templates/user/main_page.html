@@ -31,14 +31,15 @@
     var state = ["block", "none"];
     var i = 0;
     var j = 1;
-    function change() {
+    function change(k) {
       if (i >= state.length) {
         i = 0;
       }
-      var b = document.getElementById("heart");
+      var b = document.getElementById("good"+k);
       b.style.display = state[i];
+      
       i++;
-      var d = document.getElementById("emptyheart");
+      var d = document.getElementById("bad"+k);
       d.style.display = state[j];
       j--
       if (j < 0) {
@@ -74,7 +75,7 @@
             <!-- 게시글 작성자 닉네임, 작성 시간 데이터에서 가져와야함 -->
             <span style="font-size: small;">{{ user.nickname }}{{tw.created_at|timesince}} ago</span>
             <!-- 작성자가 유저인 경우만 삭제 버튼 출력 -->
-            {% if tw.nickname == user %}
+            {% if tw.nickname == user %} 
             <a href="/main/user_profile_edit/{{ tw.write_no }}"
             style="width: auto; height: 30px; margin-left: auto; margin-right: 0px;">
               <button type="button" class="btn btn-outline-secondary"
@@ -90,9 +91,10 @@
           </div>
           <div class="feed">
             <!-- 게시물 사진 클릭 시 게시물 상세페이지로 이동 -->
-            <a href="/read/">
+            <a href="/read/"> 
               <!-- 아래 사진을 가져오는 태그는 게시물 작성 페이지에서 작성 후 db에서 가져와야함 -->
-              <img class="feed_img" src="https://i.postimg.cc/kGw4SRKS/gyuhyeon.jpg">
+              {% comment %} <img class="feed_img" src="https://i.postimg.cc/kGw4SRKS/gyuhyeon.jpg"> {% endcomment %}
+              <img class="feed_img" src="/media/{{ tw.tweet_img }}">
             </a>
           </div>
           <div class="feed_content">
@@ -104,10 +106,10 @@
             <div class="comment_box">
               <div class="like_icon">
                 <div class="like">
-                  <button style="display: block" onclick="change();" id="emptyheart">
+                  <button style="display: block" onclick="change({{ tw.write_no }});" id="bad{{tw.write_no}}" class="bad" type="button">
                     <i class="fa-regular fa-heart" aria-hidden="true"></i>
                   </button>
-                  <button style="display: none" onclick="change();" id="heart">
+                  <button style="display: none" onclick="change({{ tw.write_no }});" id="good{{tw.write_no}}" class="good" type="button">
                     <i class="fa-solid fa-heart" aria-hidden="true"></i>
                   </button>
                 </div>

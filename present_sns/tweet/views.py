@@ -1,4 +1,3 @@
-
 from pyclbr import readmodule
 from django.shortcuts import render, redirect
 from django.views.generic import ListView, TemplateView
@@ -7,6 +6,11 @@ from user.views import read
 from .models import UserModel
 from .models import TweetModel
 from .models import Comment
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from uuid import uuid4
+import os
+from present_sns.settings import MEDIA_ROOT
 # from models import UserModel
 from django.contrib.auth.decorators import login_required # need login module
 
@@ -31,9 +35,8 @@ def main(request):
             return redirect('/signin')
             
     elif request.method == 'POST':  # main_profile 에서 dict 형태로 가져옴
-        username = request.username  # 현재 로그인 한 사용자를 불러오기
+        username = request.user.username  # 현재 로그인 한 사용자를 불러오기
         my_tweet = TweetModel()  # 글쓰기 모델 가져오기
-        my_tweet.write_no = username  # 모델에 사용자 저장
         my_tweet.nickname = request.POST.get('')
         my_tweet.content = request.POST.get('my-content', '')  # 모델에 글 저장
         my_tweet.tweet_img = request.POST.get('tweet_img','') # 트윗에 길
@@ -51,12 +54,38 @@ def user_profile(request):
                     return render(request, 'user/my_profile.html')
         else:
             redirect('/main')
-
-# @login_required
-# def delete_tweet(request, id):
-#     my_tweet = TweetModel.objects.get(id=id)
-#     my_tweet.delete()
-#     return redirect('/tweet')
+class UploadTweet(APIView):
+    def post(self, request):
+        temp = '#'
+        for _ in range(3):
+            for _ in range(10):
+                print(temp, end='')
+        #파일 불러오기
+        file = request.FILES['file']
+        # 고유아이디 값을 주기 위해 uuid를 사용함(파이슨에서 사용하는 문법)
+        uuid_name = uuid4().hex
+        save_path = os.path.join(MEDIA_ROOT, uuid_name)
+        with open(save_path, 'wb+') as destination:  #파일을 저장,open이 저장 경로
+            for chunk in file.chunks():
+                destination.write(chunk)
+        
+        tweet_img = uuid_name #업로드 이미지
+        content = request.data.get('content')
+        nickname = request.user
+        # user_img = request.data.get('user_img')
+        tags = request.data.get('tags')
+        write_no = request.data.get('write_no')
+       
+        TweetModel.objects.create(tweet_img=tweet_img, 
+                                  content=content, 
+                                  nickname=nickname, 
+                                #   user_img=user_img,
+                                #   like_count=0, 
+                                  tags=tags,
+                                  write_no=write_no,
+                                  )
+        
+        return Response(status=200), redirect('/main'), print('###################################')
 
 @login_required
 def user_profile_delete(request, write_no):
