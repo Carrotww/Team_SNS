@@ -11,7 +11,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as django_login
 from django.contrib.auth.views import LoginView, LogoutView, logout_then_login
-
+import logging
+logger = logging.getLogger(__name__)
 # Create your views here.
 @csrf_exempt
 def login(request):
@@ -94,4 +95,3 @@ def read(request):
 @csrf_exempt
 def my_profile(request):
     return render(request, 'user/my_profile.html')
-

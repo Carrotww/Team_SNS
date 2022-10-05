@@ -79,6 +79,14 @@ def user_profile_delete(request, write_no):
     current_user_tweet.delete()
     return redirect('/main')
 
+@login_required
+def user_profile_edit(request, write_no):
+    current_user_tweet = TweetModel.objects.get(write_no=write_no)
+    print(write_no)
+    print(current_user_tweet)
+
+    return redirect('/main')
+
 def defualt_comment(request):
     pass
 
