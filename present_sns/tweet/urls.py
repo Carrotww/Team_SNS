@@ -30,7 +30,7 @@ urlpatterns = [
    path('main/<str:username>', views.user_profile, name='user_profile'),
 #    path('main/user_profile')
    path('profileupdate/',views.profileupdate ,name='profileupdate'),
-#    path('tweet/user_profile/<str:nickname>/')
+#    path('tweet/user_profile/<str:username>/')
 ]
 
 # 파일을 저장하는 미디어파일 확장하기 위해

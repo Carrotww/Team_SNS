@@ -286,7 +286,7 @@
             let file = files[0]; 
             let tweet_img = files[0].name;
             let content = $('#input_feed_content').val();
-            let nickname = 'yoonsun'
+            let username = 'yoonsun'
             let user_img = "https://t1.daumcdn.net/cafeattach/aVeZ/96bb985f315f63a2fe16120d8b0fec4b589ac4e9";
 
             // FormData라는걸 만듦
@@ -295,7 +295,7 @@
             fd.append('file', file);
             fd.append('tweet_img', tweet_img);
             fd.append('content', content);
-            fd.append('nickname', nickname);
+            fd.append('username', username);
             fd.append('user_img', user_img);
 
             var $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');

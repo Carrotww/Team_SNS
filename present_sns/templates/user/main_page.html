@@ -50,18 +50,6 @@
   <title>8'Rooms SNS</title>
 </head>
 <body>
-  {% comment %} 
-    write_no = models.AutoField(primary_key=True) # wirte number -> 기본키
-    nickname = models.ForeignKey(UserModel, on_delete=models.CASCADE) # 외래키
-    title = models.CharField(max_length=64, blank = False)
-    content = models.CharField(max_length=256,blank = False)
-    modify_dt = models.DateTimeField('MODIFY DATE', auto_now=True)
-    tags = TaggableManager(blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    tweet_img = models.ImageField(upload_to='tweet', null=True, blank=True, default=None) #업로드 이미지
-    profile_img = models.TextField()
-  {% endcomment %}
   <div class="container">
     {% for tw in tweet %}
       <div class="col">
@@ -71,11 +59,11 @@
               <img class="profile_img" src="https://t1.daumcdn.net/cafeattach/aVeZ/96bb985f315f63a2fe16120d8b0fec4b589ac4e9">
             </div>
             <!-- 작성자 아이디 데이터에서 가져와야함-->
-            <span class="author"> {{ tw.nickname }} </span> {% comment %}{{ tw.nickname }}{% endcomment %}
+            <span class="author"> {{ tw.username }} </span>
             <!-- 게시글 작성자 닉네임, 작성 시간 데이터에서 가져와야함 -->
-            <span style="font-size: small;">{{ user.nickname }}{{tw.created_at|timesince}} ago</span>
+            <span style="font-size: small;">{{tw.created_at|timesince}} ago</span>
             <!-- 작성자가 유저인 경우만 삭제 버튼 출력 -->
-            {% if tw.nickname == user %} 
+            {% if tw.username == user %} 
             <a href="/main/user_profile_edit/{{ tw.write_no }}"
             style="width: auto; height: 30px; margin-left: auto; margin-right: 0px;">
               <button type="button" class="btn btn-outline-secondary"
@@ -93,7 +81,6 @@
             <!-- 게시물 사진 클릭 시 게시물 상세페이지로 이동 -->
             <a href="/read/"> 
               <!-- 아래 사진을 가져오는 태그는 게시물 작성 페이지에서 작성 후 db에서 가져와야함 -->
-              {% comment %} <img class="feed_img" src="https://i.postimg.cc/kGw4SRKS/gyuhyeon.jpg"> {% endcomment %}
               <img class="feed_img" src="/media/{{ tw.tweet_img }}">
             </a>
           </div>
@@ -140,8 +127,6 @@
             </div>
           </div>
           <!-- 태그 반복문, 조건문 종료 -->
-          {% comment %}{% endfor %}{% endcomment %}
-          {% comment %}{% endif %}{% endcomment %}
         </div>
       </div>
     {% endfor %}
