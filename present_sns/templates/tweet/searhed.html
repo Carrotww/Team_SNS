@@ -110,7 +110,7 @@
           </form>
           <!-- 태그 조건문(게시물 작성 페이지에서 입력한 태그 db에서 가져와야함) -->
           <div class="tag_box">
-            <div class="container timeline-container">
+            {% comment %} <div class="container timeline-container">
             <div class="tag-cloud">
             {% load taggit_templatetags2_tags %}
             {% get_tagcloud as tags %}
@@ -122,9 +122,8 @@
             </a>
             </div>
             {% endfor %}
-          </div>
+          </div> {% endcomment %}
         </div>
-{% comment %} 
             {% if tw.tags.all %}
             {% for tag in tw.tags.all %}
               <div class="tags">        
@@ -134,7 +133,7 @@
               </a>
             </div>
             {% endfor %}
-            {% endif %}   {% endcomment %}
+            {% endif %}
           </div>
             </div>
           </div>

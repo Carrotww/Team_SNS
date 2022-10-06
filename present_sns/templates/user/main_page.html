@@ -49,6 +49,54 @@
   </script>
   <title>8'Rooms SNS</title>
 </head>
+<style>
+  .modal_overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
+  }
+
+  .modal_window {
+    background: white;
+    backdrop-filter: blur(13.5px);
+    -webkit-backdrop-filter: blur(13.5px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    width: 800px;
+    height: 600px;
+    position: relative;
+    padding: 10px;
+
+  }
+
+  .modal_image_upload {
+    outline: 2px dashed black;
+    outline-offset: -10px;
+    text-align: center;
+    transition: all .15s ease-in-out;
+    width: 780px;
+    height: 548px;
+  }
+
+
+  .button_s {
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+  }
+  .container {
+    overflow: hidden;
+  }
+</style>
 <body>
   <div class="container">
     {% for tw in tweet %}
@@ -106,17 +154,14 @@
               <button onclick="Comment()" type="submit" class="btn btn-dark" style="width: 70px;">게시</button>
             </div>
           </form>
-          <!-- 태그 조건문(게시물 작성 페이지에서 입력한 태그 db에서 가져와야함) -->
-          
             <div class="tag_box">
               {% if tw.tags.all %}
               {% for tag in tw.tags.all %}
                 <div class="tags">        
-                  <!-- 태그 선택 시 해당 태그가 있는 모든 게시물 보여주기(페이지나 모달 창 만들어야 할 것 같음) -->
-                <a href="{% url 'tagged_object_list' tag.name %}" style="color:black; ">
-                    {{ tag.name }}     
-                </a>
-              </div>
+                  <a href="{% url 'tagged_object_list' tag.name %}" style="color:black; ">
+                      {{ tag.name }}     
+                  </a>
+                </div>
               {% endfor %}
               {% endif %}  
             </div>
@@ -130,6 +175,79 @@
             {% endif %}
         </div>
       </div>
+      <!-- 게시물 수정 모달 시작 -->
+      <div id="edit_modal" class="modal_overlay">
+        <div class="modal_window">
+          <div style="display: flex; flex-direction:row; justify-content: space-between;">
+            <div>
+              수정하거라
+            </div>
+            <div>
+              Feed Edit
+            </div>
+            <div>
+              <!-- 닫기 버튼을 넣기위해 -->
+
+              <button class="button_s" type="button" id="edit_close_button">
+                <i class="fa-regular fa-circle-xmark">Close</i>
+              </button>
+            </div>
+          </div>
+          <!-- 이미지 -->
+          <div style="display: flex; flex-direction:row;">
+            <div class="img_upload_space" style="width: 500px; height: 540px; margin-top: 20px;">
+              <img class="feed_img" src="/media/{{ tw.tweet_img }}" id="modal_image">
+            </div>
+            <!-- 내용 -->
+            <div style="border-left: solid 1px gray; margin-top: 20px;">
+              <div class="feed_content">
+                <textarea class="form-control" rows="9" id="modal_content" style="width: 274px; height: 400px;"
+                  placeholder="내용을 적어주세요"></textarea>
+              </div>
+              <!-- 태그 -->
+              <div>
+                <textarea class="form-control" id="modal_tags" rows="9"
+                  style="width: 274px; height: 100px;" placeholder="tag"></textarea>
+
+              </div>
+
+              <div>
+                <button id="feed_create_button" type="button" class="fa-solid fa-forward fa-1x"
+                  style="padding: 0 100px;">수정완료</i>
+
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+      <script>
+        function OpenModal(content, tags, image) {
+          $('#edit_modal').css({
+            display: 'flex'
+            
+          });
+          $(document.body).css({
+                overflow: 'hidden'
+            });
+  
+          var modal_content = document.getElementById("modal_content")
+          var modal_tags = document.getElementById("modal_tags")
+          var modal_image = document.getElementById("modal_image")
+
+          modal_content.placeholder = content
+
+          modal_image.src = image
+          console.log(image)
+        }
+        $('#edit_close_button').click(function () {
+          $('#edit_modal').hide();
+        })
+
+      </script>
     {% endfor %}
   </div>
 </body>

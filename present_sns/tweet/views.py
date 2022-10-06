@@ -137,6 +137,10 @@ def read_tweet(request, write_no):
 @login_required
 @csrf_exempt
 def comment_write(request, id):
+    print('testestestesttest')
+    print('testestestesttest')
+    print('testestestesttest')
+    print('testestestesttest')
     if request.method == 'POST':
         username = request.user.username
         comment = request.POST.get('my-comment',"")
