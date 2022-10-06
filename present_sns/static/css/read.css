@@ -3,13 +3,23 @@
   display: flex;
   justify-content: center;
   padding-top: 10px;
+
 }
 
-.main_feed {
-  width: auto;
-  height: 2000px;
+.col {
+  height: auto;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+}
+.item {
+  width: auto;
+  margin-top: 10px;
+  border: 1px #CCD0D5 solid;
+
+
+}
+.item-view {
+  width: 500px;
 }
 
 .profile_box {
@@ -39,37 +49,23 @@
 
 .feed_box {
   background-color: white;
-  width: 500px;
-  min-height: 800px;
+  min-width: 600px;
+  height: auto;
+  margin-top: 10px;
+  min-height: 750px;
   padding-bottom: 10px;
   border: 1px #CCD0D5 solid;
 }
-
 .feed_img {
   width: 100%;
   object-fit: contain;
+  min-height:500px;
 }
-
-/* .feed a:hover img,
-  .feed a:focus img {
-    transform: scale(0.9);
-  } */
 
 .feed_content {
-  margin-top: 10px;
-  padding: 0px 10px;
-  margin-left: 10px;
-}
+  margin-top: 20px;
+  padding: 0px 30px;
 
-.feed_txt {
-  font-size: 14px;
-}
-
-.feed_icon {
-  padding: 5px 5px 0px 5px;
-  display: flex;
-  justify-content: space-between;
-  cursor: pointer;
 }
 
 .feed_icon span {
@@ -80,7 +76,12 @@
   display: flex;
 }
 
-#emptyheart {
+.like_icon {
+  display: flex;
+  align-items: center;
+}
+
+.good {
   padding: 0;
   border: 0;
   outline: 0;
@@ -88,7 +89,7 @@
   background-color: transparent;
 }
 
-#heart {
+.bad {
   padding: 0;
   border: 0;
   outline: 0;
@@ -96,10 +97,25 @@
   background-color: transparent;
 }
 
-.intro {
-  font-weight: bold;
+.comment_box {
+  display: flex;
+  justify-content:space-evenly;
 }
 
+.comment {
+  display: flex;
+  width: auto;
+  height: auto;
+}
+.tag_box {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: 40px;
+  padding: 0px 20px;
+}
 .tags {
-  margin-left:10px;
+  margin: 0px 7px 0px 7px;
 }

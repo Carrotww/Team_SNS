@@ -1,0 +1,147 @@
+{% include 'temp_test/nav.html' %}
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <!-- 메인페이지 css 경로 -->
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
+  <!-- google icon -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+    rel="stylesheet">
+
+  <script>
+    function Comment() {
+      alert('댓글 작성 완료!');
+    }
+    function delete_feed() {
+      alert('게시글 삭제 완료!')
+    }
+    var state = ["block", "none"];
+    var i = 0;
+    var j = 1;
+    function change(k) {
+      if (i >= state.length) {
+        i = 0;
+      }
+      var b = document.getElementById("good"+k);
+      b.style.display = state[i];
+      
+      i++;
+      var d = document.getElementById("bad"+k);
+      d.style.display = state[j];
+      j--
+      if (j < 0) {
+        j = 1;
+      }
+    }
+  </script>
+  <title>8'Rooms SNS</title>
+</head>
+<body>
+  <div class="container">
+    {% if searched %}        
+    {% for result in searched%}
+      <div class="col">
+        <div class="feed_box">
+          <div class="profile_box">
+            <div class="profile_img_box">
+              <img class="profile_img" src="https://t1.daumcdn.net/cafeattach/aVeZ/96bb985f315f63a2fe16120d8b0fec4b589ac4e9">
+            </div>
+            <!-- 작성자 아이디 데이터에서 가져와야함-->
+            <span class="author"> {{ result.username }} </span>
+            <!-- 게시글 작성자 닉네임, 작성 시간 데이터에서 가져와야함 -->
+            <span style="font-size: small;">{{result.created_at|timesince}} ago</span>
+            <!-- 작성자가 유저인 경우만 삭제 버튼 출력 -->
+            {% if result.username == user %} 
+            <a href="/main/user_profile_edit/{{ result.write_no }}"
+            style="width: auto; height: 30px; margin-left: auto; margin-right: 0px;">
+              <button type="button" class="btn btn-outline-secondary"
+              style="width: auto; height: 32px; diplay: flex; align-items:center;">수정</button>
+            </a>
+  
+            <a href="/main/user_profile_delete/{{ result.write_no }}"
+            style="width: auto; height: 30px; margin-left: 13px; margin-right: 3px;">
+              <button type="button" class="btn btn-outline-secondary" onclick="delete_feed()"
+              style="width: auto; height: 32px; diplay: flex; align-items:center;">삭제</button>
+            </a>
+            {% endif %}
+          </div>
+          <div class="feed">
+            <!-- 게시물 사진 클릭 시 게시물 상세페이지로 이동 -->
+            <a href="/read/"> 
+              <!-- 아래 사진을 가져오는 태그는 게시물 작성 페이지에서 작성 후 db에서 가져와야함 -->
+              <img class="feed_img" src="/media/{{ result.tweet_img }}">
+            </a>
+          </div>
+          <div class="feed_content">
+            <!-- 아래 게시글도 게시물 작성 페이지에서 작성 후 db에서 가져와야함 -->
+            <p style="font-size: 14px;">{{ result.content }}</p>
+          </div>
+          <form action="" method="post" style="margin-top: 20px;">
+            {% csrf_token %}
+            <div class="comment_box">
+              <div class="like_icon">
+                <div class="like">
+                  <button style="display: block" onclick="change({{ result.write_no }});" id="bad{{result.write_no}}" class="bad" type="button">
+                    <i class="fa-regular fa-heart" aria-hidden="true"></i>
+                  </button>
+                  <button style="display: none" onclick="change({{ result.write_no }});" id="good{{result.write_no}}" class="good" type="button">
+                    <i class="fa-solid fa-heart" aria-hidden="true"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="comment">
+                <input type="text" class="form-control" placeholder="댓글" aria-label="First name" name="my-comment"
+                  id="my-comment" style="width: 400px;">
+              </div>
+              <button onclick="Comment()" type="submit" class="btn btn-dark" style="width: 70px;">게시</button>
+            </div>
+          </form>
+          <!-- 태그 조건문(게시물 작성 페이지에서 입력한 태그 db에서 가져와야함) -->
+          <div class="tag_box">
+            {% comment %} <div class="container timeline-container">
+            <div class="tag-cloud">
+            {% load taggit_templatetags2_tags %}
+            {% get_tagcloud as tags %}
+            {% for tag in tags %}
+            <div class="tags">        
+              <!-- 태그 선택 시 해당 태그가 있는 모든 게시물 보여주기(페이지나 모달 창 만들어야 할 것 같음) -->
+            <a href="{% url 'tagged_object_list' tag.name %}" style="color:black; ">
+                {{ tag.name }}     
+            </a>
+            </div>
+            {% endfor %}
+          </div> {% endcomment %}
+        </div>
+            {% if tw.tags.all %}
+            {% for tag in tw.tags.all %}
+              <div class="tags">        
+                <!-- 태그 선택 시 해당 태그가 있는 모든 게시물 보여주기(페이지나 모달 창 만들어야 할 것 같음) -->
+              <a href="{% url 'tagged_object_list' tag.name %}" style="color:black; ">
+                  {{ tag.name }}     
+              </a>
+            </div>
+            {% endfor %}
+            {% endif %}
+          </div>
+            </div>
+          </div>
+          <!-- 태그 반복문, 조건문 종료 -->
+        </div>
+      </div>
+    {% endfor %}
+    {% endif%}
+  </div>
+</body>
+</html>

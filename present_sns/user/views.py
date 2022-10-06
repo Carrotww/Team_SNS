@@ -87,11 +87,5 @@ def my_profile(request):
     return render(request, 'user/my_profile.html')
 
 @csrf_exempt
-def read(request):
-    return render(request, 'tweet/read.html')
-
-
-
-@csrf_exempt
 def my_profile(request):
     return render(request, 'user/my_profile.html')
