@@ -8,6 +8,11 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from uuid import uuid4
 import os
+# BEOki 추가
+from asyncio.windows_events import NULL
+from django.contrib import messages
+from django.db.models import Q
+# BEOki 추가
 from present_sns.settings import MEDIA_ROOT
 # from models import UserModel
 from django.contrib.auth.decorators import login_required # need login module
@@ -87,19 +92,20 @@ class UploadTweet(APIView):
         content = request.data.get('content')
         username = request.user
         # user_img = request.data.get('user_img')
-        tags = request.data.get('tags')
+        tags = request.data.get('tag', '').split()
         write_no = request.data.get('write_no')
        
-        TweetModel.objects.create(tweet_img=tweet_img, 
-                                  content=content, 
-                                  username=username, 
-                                #   user_img=user_img,
-                                #   like_count=0, 
-                                  tags=tags,
-                                  write_no=write_no,
-                                  )
+        current_tweet = TweetModel.objects.create(tweet_img=tweet_img, content=content,
+        username=username, write_no=write_no)
+        # user_img=user_img, # like_count=0,
+        if tags:
+            for tag in tags:
+                tag = tag.strip()
+                if tag != '':
+                    current_tweet.tags.add(tag)
+        current_tweet.save()
         
-        return Response(status=200), redirect('/main'), print('###################################')
+        return Response(status=200), redirect('/main')
 
 @login_required
 def user_profile_delete(request, write_no):
@@ -135,7 +141,7 @@ def comment_write(request, id):
         username = request.user.username
         comment = request.POST.get('my-comment',"")
         if comment == '':
-            messages.warning(request, '댓글을 확인해 주세요')
+            messages.warning(request, '댓글을 입력해 주세요!')
             return redirect('/main/read/'+str(id))
             # return redirect('/main/read/'+str(id), {'error': '댓글을 입력해 주세요!'})
         
@@ -147,8 +153,12 @@ def comment_write(request, id):
         return redirect('/main/read/'+str(id))
 
 @login_required
-def comment_delete(request, id):
-    pass
+def comment_delete(request, id, write_no_id):
+    current_comment = Comment.objects.get(id=id)
+    # temp_write_no = current_comment.write_no
+    current_comment.delete()
+    
+    return redirect('/main/read/'+str(write_no_id))
 
 @login_required
 def write_main_comment(request, id, username): # id값은 write_no의 id값
@@ -165,15 +175,6 @@ def write_main_comment(request, id, username): # id값은 write_no의 id값
 
         return redirect('/main/' + str(id))
         # return redirect(f'/main/{str(c)urrent_tweet_id}/read/')
-
-
-@login_required
-def delete_comment(request, id): # comment primary key 인 id 값을 인자로 가져와서 비교하여 삭제함
-    comment = Comment.objects.get(id=id) # comment의 id
-    current_tweet_id = comment.tweet_table.write_no # 작성중인 post 게시물의 id
-    comment.delete()
-
-    return redirect(f'/main/{str(current_tweet_id)}/read/')
 
 class TagCloudTV(TemplateView):
     template_name = 'taggit/tag_cloud_view.html' # tag_cloud_view.html 아직 없음!
@@ -210,3 +211,35 @@ def profileupdate(request):
         user_table.save()
         return redirect('/')
     return render(request, 'user/profileupdate.html')
+
+@login_required
+def search(request):
+    if request.method == "POST":
+        search_keyword = request.POST['search']
+        print(search_keyword)
+        if not search_keyword:
+            return redirect('/main')
+        else:
+            if len(search_keyword) >= 2 :
+                searched = TweetModel.objects.filter(Q(content__icontains=search_keyword))
+                # | Q(tags__icontains=search_keyword) 컬럼tags 추가요망                
+                for i in searched:
+                    print(searched)
+                return render(request, 'tweet/searhed.html',{'searched': searched})
+            if len(search_keyword) <= 1:
+                return redirect('/main')
+
+class TagCloudTV(TemplateView):
+    template_name = 'tweet/searhed.html'
+
+class TaggedObjectLV(ListView):
+    template_name = 'tweet/searhed.html'
+    model = TweetModel
+    
+    def get_queryset(self):
+        return TweetModel.objects.filter(tags__name=self.kwargs.get('tag'))
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tagname'] = self.kwargs['tag']
+        return context

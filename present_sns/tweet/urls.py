@@ -3,6 +3,9 @@ from . import views # user app의 views를 import 해옴
 from tweet.views import UploadTweet
 from present_sns.settings import MEDIA_URL, MEDIA_ROOT
 from django.conf.urls.static import static
+from .models import TweetModel
+from django.db import models
+from .views import search
 
 
 # 1. main -> myprofile로 가는 경로
@@ -23,7 +26,7 @@ urlpatterns = [
    
    path('main/read/<int:write_no>', views.read_tweet, name='read_tweet'), # 게시글 상세페이지 접속
    path('main/comment/<int:id>', views.comment_write, name='comment_write'), # 해당 게시글의 댓글 작성
-   path('main/comment/delete/<int:id>', views.comment_delete, name='comment_delete'), # 해당 게시글의 댓글 삭제 
+   path('main/read/comment/delete/<int:id>/<int:write_no_id>', views.comment_delete, name='comment_delete'), # 해당 게시글의 댓글 삭제 
    
    path('main/tweet_post', UploadTweet.as_view(), name='tweet_post'),
    # path('main/tweet_post', UploadTweet.as_view(), name='tweet_post'), #윤선 추가
@@ -36,6 +39,7 @@ urlpatterns = [
 #    path('main/user_profile')
    path('profileupdate/',views.profileupdate ,name='profileupdate'),
 #    path('tweet/user_profile/<str:username>/')
+   path('search', views.search, name='search'),
 ]
 
 # 파일을 저장하는 미디어파일 확장하기 위해

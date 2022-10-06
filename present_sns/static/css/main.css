@@ -48,6 +48,7 @@
     min-height: 750px;
     padding-bottom: 10px;
     border: 1px #CCD0D5 solid;
+
 }
 .feed a{
     display: flex;
@@ -93,7 +94,7 @@
 
 .comment_box {
     display: flex;
-    justify-content:space-evenly
+    justify-content:space-evenly;
 }
 
 .comment {
@@ -101,7 +102,15 @@
     width: auto;
     height: auto;
 }
-
+.tag_box {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-top: 40px;
+    padding: 0px 20px;
+}
 .tags {
-    margin-top: 20px;
+    margin: 0px 7px 0px 7px;
 }

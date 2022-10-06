@@ -88,14 +88,20 @@
         <div class="wrapper">
             <!-- Made a logo container  -->
             <div class="logo">
-                <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="">
+                <a href="/main/">
+                    <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="">
+                </a>
             </div>
             <!-- Logo container ends here -->
             
             <!-- Created search container  -->
+            <form class=search method="POST" action="{% url 'search'%}">
+                {% csrf_token %}
             <div class="search">
-                <input type="text" placeholder="Search" name="search_bar">
+                <input type="text" placeholder="Search" name="search">
             </div>
+            <button class="btn btn-dark" type="submit"> Search </button>
+            </form>
             <!-- search Container ends here  -->
             
             <!-- Created icons container  -->
@@ -237,13 +243,13 @@
                 </div>
                 <div style="border-left: solid 1px gray; margin-top: 20px;">
                     <div>
-                        <textarea id="input_feed_content"class="form-control" id="exampleFormControlTextarea1" rows="9"
+                        <textarea id="input_feed_content" class="form-control" id="exampleFormControlTextarea1" rows="9"
 
                             style="width: 274px; height: 400px;" placeholder="내용을 적어주세요"></textarea>
                     </div>
                     <div>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="9"
-                            style="width: 274px; height: 100px;" placeholder="tag"></textarea>
+                        <textarea id = "input_feed_tags" class="form-control" id="exampleFormControlTextarea1" rows="9"
+                            style="width: 274px; height: 100px;" placeholder="tag를 space로 구분 해주세요"></textarea>
 
                     </div>
                    
@@ -280,6 +286,7 @@
         $('#feed_create_button').click(function (){
             // 공유하기버튼을 눌렀다IMG_3222.JPG
             alert("공유 완료!")
+            location.reload();
             // let으로 해야 들어오는 값을 변경이 가능하다
             // 파일을 1개만 올리니까 [0]번째로 지정함
             let file = files[0]; 
@@ -287,6 +294,7 @@
             let content = $('#input_feed_content').val();
             let username = '{{ user }}'
             let user_img = "https://t1.daumcdn.net/cafeattach/aVeZ/96bb985f315f63a2fe16120d8b0fec4b589ac4e9";
+            let tag = $('#input_feed_tags').val();
 
             // FormData라는걸 만듦
             let fd = new FormData();
@@ -297,6 +305,7 @@
             fd.append('content', content);
             fd.append('username', username);
             fd.append('user_img', user_img);
+            fd.append('tag', tag);
 
             var $crf_token = $('[name="csrfmiddlewaretoken"]').attr('value');
             $.ajax({
