@@ -9,7 +9,7 @@ from rest_framework.response import Response
 from uuid import uuid4
 import os
 # BEOki 추가
-from asyncio.windows_events import NULL
+
 from django.contrib import messages
 from django.db.models import Q
 # BEOki 추가
@@ -75,10 +75,6 @@ def user_profile(request):
             redirect('/main')
 class UploadTweet(APIView):
     def post(self, request):
-        temp = '#'
-        for _ in range(3):
-            for _ in range(10):
-                print(temp, end='')
         #파일 불러오기
         file = request.FILES['file']
         # 고유아이디 값을 주기 위해 uuid를 사용함(파이슨에서 사용하는 문법)
@@ -119,12 +115,15 @@ def user_profile_delete(request, write_no):
     return redirect('/main')
 
 @login_required
-def user_profile_edit(request, write_no):
-    current_user_tweet = TweetModel.objects.get(write_no=write_no)
-    print(write_no)
-    print(current_user_tweet)
-
-    return redirect('/main')
+def EditPeed(request, write_no):
+    
+    if request.method == "POST":
+        editpeed = TweetModel.objects.get(write_no=write_no)
+        editpeed.content = request.POST.get('content', '')
+        editpeed.tags = request.POST.get('tags')
+        editpeed.save()
+        print(request.POST) #수정할 부분 보여줌
+        return redirect('/main')
 
 def read_tweet(request, write_no):
     if request.method == 'GET':

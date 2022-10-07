@@ -22,14 +22,13 @@ urlpatterns = [
    
    path('main/user_profile',views.user_profile, name='user_profile'), # 내 프로필 페이지
    path('main/user_profile_delete/<int:write_no>', views.user_profile_delete, name='user_profile_delete'), # 게시물 삭제
-   path('main/user_profile_edit/<int:write_no>', views.user_profile_edit, name='user_profile_edit'), # 게시물 수정
-   
+   path('main/tweet_edit/<str:write_no>', views.EditPeed, name='tweet_post'), #게시물 수정
    path('main/read/<int:write_no>', views.read_tweet, name='read_tweet'), # 게시글 상세페이지 접속
    path('main/comment/<int:id>', views.comment_write, name='comment_write'), # 해당 게시글의 댓글 작성
    path('main/read/comment/delete/<int:id>/<int:write_no_id>', views.comment_delete, name='comment_delete'), # 해당 게시글의 댓글 삭제 
    
    path('main/tweet_post', UploadTweet.as_view(), name='tweet_post'),
-   # path('main/tweet_post', UploadTweet.as_view(), name='tweet_post'), #윤선 추가
+ 
    
    path('tag/', views.TagCloudTV.as_view(), name='tag_cloud'),
    path('tag/<str:tag>/', views.TaggedObjectLV.as_view(), name='tagged_object_list'),
