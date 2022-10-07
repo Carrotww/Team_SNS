@@ -94,7 +94,7 @@ class UploadTweet(APIView):
         # user_img = request.data.get('user_img')
         tags = request.data.get('tag', '').split()
         write_no = request.data.get('write_no')
-       
+        
         current_tweet = TweetModel.objects.create(tweet_img=tweet_img, content=content,
         username=username, write_no=write_no)
         # user_img=user_img, # like_count=0,
