@@ -1,26 +1,33 @@
+{% include 'temp_test/nav.html' %}
 
-<link href="https://fonts.googleapis.com/css?family=Indie+Flower|Overpass+Mono" rel="stylesheet">
-
-<div id="wrapper">
-  <div class="main-content">
-    <div class="header">
-      <img src="https://i.imgur.com/zqpwkLQ.png" />
-    </div>
-    <div class="l-part">
-      <input type="text" placeholder="Username" class="input-1" />
-      <div class="overlap-text">
-        <input type="password" placeholder="Password" class="input-2" />
-        <a href="#">Forgot?</a>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+ 
+<a href="#" data-toggle="modal" data-target="#myModal">이미지 모달띄우기</a>
+ 
+ 
+<div class="modal fade" id="myModal" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+      
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">사진제목</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        
+        <!-- Modal body -->
+        <div class="modal-body">
+            <img class="card-img-top rounded img-fluid" src="">
+        </div>
+        
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+        
       </div>
-      <input type="button" value="Log in" class="btn" />
     </div>
-  </div>
-  <div class="sub-content">
-    <div class="s-part">
-      Don't have an account?<a href="#">Sign up</a>
-    </div>
-  </div>
 </div>
-
-
-
